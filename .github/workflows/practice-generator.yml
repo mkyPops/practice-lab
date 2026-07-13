@@ -1,0 +1,32 @@
+name: Practice generator
+
+on:
+  schedule:
+    - cron: "0 9 * * *"  # Daily, 09:00 UTC
+  workflow_dispatch: {}  # lets you trigger a run manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Configure git identity
+        run: |
+          git config user.name "practice-lab-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+      - name: Generate, commit, and push
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/generate_and_commit.py
