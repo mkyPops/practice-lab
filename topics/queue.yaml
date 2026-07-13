@@ -5,7 +5,7 @@
   title: LRU cache implementation
   brief: A fixed-capacity LRU cache using an OrderedDict, with get/put in O(1).
 - id: go-worker-pool
-  status: pending
+  status: done
   language: go
   path: backend/go/worker_pool.go
   title: bounded worker pool
