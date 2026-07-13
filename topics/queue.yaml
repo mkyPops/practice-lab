@@ -1,206 +1,193 @@
-# Each entry becomes exactly one commit. Order = execution order (top runs next).
-# status flips pending -> done automatically after a successful push.
-# Add more items any time; the generator just stops cleanly when none remain.
-
 - id: py-lru-cache
-  status: pending
+  status: done
   language: python
   path: data-structures/python/lru_cache.py
-  title: "LRU cache implementation"
-  brief: "A fixed-capacity LRU cache using an OrderedDict, with get/put in O(1)."
-
+  title: LRU cache implementation
+  brief: A fixed-capacity LRU cache using an OrderedDict, with get/put in O(1).
 - id: go-worker-pool
   status: pending
   language: go
   path: backend/go/worker_pool.go
-  title: "bounded worker pool"
-  brief: "A worker pool with a fixed goroutine count pulling jobs from a channel, with graceful shutdown via context cancellation."
-
+  title: bounded worker pool
+  brief: A worker pool with a fixed goroutine count pulling jobs from a channel, with
+    graceful shutdown via context cancellation.
 - id: ts-debounce-throttle
   status: pending
   language: typescript
   path: algorithms/typescript/debounce_throttle.ts
-  title: "debounce and throttle utilities"
-  brief: "Generic, typed debounce() and throttle() higher-order functions."
-
+  title: debounce and throttle utilities
+  brief: Generic, typed debounce() and throttle() higher-order functions.
 - id: py-drf-serializer
   status: pending
   language: python
   path: backend/python/drf_nested_serializer.py
-  title: "DRF nested serializer with validation"
-  brief: "A Django REST Framework serializer handling nested writes and field-level validation."
-
+  title: DRF nested serializer with validation
+  brief: A Django REST Framework serializer handling nested writes and field-level
+    validation.
 - id: playwright-pom-login
   status: pending
   language: typescript
   path: qa-automation/typescript/login_page_object.ts
-  title: "Playwright page object for a login flow"
-  brief: "A Page Object Model class wrapping a login form, using explicit waits and locator best practices."
-
+  title: Playwright page object for a login flow
+  brief: A Page Object Model class wrapping a login form, using explicit waits and
+    locator best practices.
 - id: cpp-binary-search-variants
   status: pending
   language: cpp
   path: algorithms/cpp/binary_search_variants.cpp
-  title: "binary search: first and last occurrence"
-  brief: "Lower-bound and upper-bound style binary search over a sorted vector."
-
+  title: 'binary search: first and last occurrence'
+  brief: Lower-bound and upper-bound style binary search over a sorted vector.
 - id: redis-cache-decorator
   status: pending
   language: python
   path: backend/python/redis_cache_decorator.py
-  title: "Redis caching decorator"
-  brief: "A decorator that caches function results in Redis with a TTL and a hashed cache key."
-
+  title: Redis caching decorator
+  brief: A decorator that caches function results in Redis with a TTL and a hashed
+    cache key.
 - id: postman-pretest-auth
   status: pending
   language: javascript
   path: qa-automation/javascript/postman_pretest_auth.js
-  title: "Postman pre-request auth token script"
-  brief: "Pre-request script that fetches/refreshes a bearer token and injects it into the outgoing request."
-
+  title: Postman pre-request auth token script
+  brief: Pre-request script that fetches/refreshes a bearer token and injects it into
+    the outgoing request.
 - id: java-generic-stack
   status: pending
   language: java
   path: data-structures/java/BoundedStack.java
-  title: "generic array-backed stack with dynamic resizing"
-  brief: "A generic Stack<T> backed by an array that doubles capacity when full and halves it when sparsely used."
-
+  title: generic array-backed stack with dynamic resizing
+  brief: A generic Stack<T> backed by an array that doubles capacity when full and
+    halves it when sparsely used.
 - id: py-trie
   status: pending
   language: python
   path: data-structures/python/trie.py
-  title: "trie (prefix tree) implementation"
-  brief: "A Trie supporting insert, search, and startsWith prefix lookups."
-
+  title: trie (prefix tree) implementation
+  brief: A Trie supporting insert, search, and startsWith prefix lookups.
 - id: go-union-find
   status: pending
   language: go
   path: data-structures/go/union_find.go
-  title: "union-find with path compression"
-  brief: "A Disjoint Set Union structure with path compression and union by rank."
-
+  title: union-find with path compression
+  brief: A Disjoint Set Union structure with path compression and union by rank.
 - id: ts-bst
   status: pending
   language: typescript
   path: data-structures/typescript/binary_search_tree.ts
-  title: "binary search tree with in-order traversal"
-  brief: "A BST supporting insert, search, and an in-order traversal that returns sorted keys."
-
+  title: binary search tree with in-order traversal
+  brief: A BST supporting insert, search, and an in-order traversal that returns sorted
+    keys.
 - id: cpp-merge-sort
   status: pending
   language: cpp
   path: algorithms/cpp/merge_sort.cpp
-  title: "merge sort implementation"
-  brief: "A stable merge sort over a vector, with the merge step split out for clarity."
-
+  title: merge sort implementation
+  brief: A stable merge sort over a vector, with the merge step split out for clarity.
 - id: java-min-heap
   status: pending
   language: java
   path: data-structures/java/MinHeap.java
-  title: "generic min-heap"
-  brief: "A generic MinHeap<T extends Comparable<T>> backed by an array, with sift-up/sift-down."
-
+  title: generic min-heap
+  brief: A generic MinHeap<T extends Comparable<T>> backed by an array, with sift-up/sift-down.
 - id: py-graph-traversal
   status: pending
   language: python
   path: algorithms/python/graph_traversal.py
-  title: "graph BFS and DFS traversal"
-  brief: "Breadth-first and depth-first traversal over a graph represented as an adjacency list."
-
+  title: graph BFS and DFS traversal
+  brief: Breadth-first and depth-first traversal over a graph represented as an adjacency
+    list.
 - id: cpp-quicksort
   status: pending
   language: cpp
   path: algorithms/cpp/quicksort.cpp
-  title: "quicksort with median-of-three pivot"
-  brief: "An in-place quicksort using median-of-three pivot selection to avoid worst-case behavior on sorted input."
-
+  title: quicksort with median-of-three pivot
+  brief: An in-place quicksort using median-of-three pivot selection to avoid worst-case
+    behavior on sorted input.
 - id: ts-linked-list
   status: pending
   language: typescript
   path: data-structures/typescript/linked_list.ts
-  title: "singly linked list"
-  brief: "A singly linked list with append, prepend, delete, and reverse operations."
-
+  title: singly linked list
+  brief: A singly linked list with append, prepend, delete, and reverse operations.
 - id: js-memoize
   status: pending
   language: javascript
   path: algorithms/javascript/memoize.js
-  title: "memoization utility"
-  brief: "A generic memoize() higher-order function caching results by argument signature."
-
+  title: memoization utility
+  brief: A generic memoize() higher-order function caching results by argument signature.
 - id: go-rate-limiter
   status: pending
   language: go
   path: backend/go/rate_limiter.go
-  title: "token bucket rate limiter"
-  brief: "A rate limiter using the token bucket algorithm, safe for concurrent use."
-
+  title: token bucket rate limiter
+  brief: A rate limiter using the token bucket algorithm, safe for concurrent use.
 - id: py-django-jwt-middleware
   status: pending
   language: python
   path: backend/python/django_jwt_middleware.py
-  title: "JWT authentication middleware for Django"
-  brief: "Middleware that validates a bearer JWT on incoming requests and attaches the user to the request."
-
+  title: JWT authentication middleware for Django
+  brief: Middleware that validates a bearer JWT on incoming requests and attaches
+    the user to the request.
 - id: py-django-mgmt-command
   status: pending
   language: python
   path: backend/python/django_management_command.py
-  title: "custom Django management command"
-  brief: "A management command that accepts arguments and performs a bulk data operation with progress output."
-
+  title: custom Django management command
+  brief: A management command that accepts arguments and performs a bulk data operation
+    with progress output.
 - id: py-celery-retry
   status: pending
   language: python
   path: backend/python/celery_retry_task.py
-  title: "Celery task with retry and backoff"
-  brief: "A Celery task that retries transient failures with exponential backoff and a max retry cap."
-
+  title: Celery task with retry and backoff
+  brief: A Celery task that retries transient failures with exponential backoff and
+    a max retry cap.
 - id: py-circuit-breaker
   status: pending
   language: python
   path: backend/python/circuit_breaker.py
-  title: "circuit breaker decorator"
-  brief: "A decorator implementing the circuit breaker pattern to stop calling a failing dependency temporarily."
-
+  title: circuit breaker decorator
+  brief: A decorator implementing the circuit breaker pattern to stop calling a failing
+    dependency temporarily.
 - id: py-backoff-client
   status: pending
   language: python
   path: backend/python/backoff_http_client.py
-  title: "HTTP client with exponential backoff"
-  brief: "A requests-based HTTP client wrapper that retries failed calls with exponential backoff and jitter."
-
+  title: HTTP client with exponential backoff
+  brief: A requests-based HTTP client wrapper that retries failed calls with exponential
+    backoff and jitter.
 - id: go-health-endpoint
   status: pending
   language: go
   path: backend/go/health_endpoint.go
-  title: "readiness and liveness health endpoints"
-  brief: "An HTTP server exposing /healthz and /readyz endpoints for container orchestration checks."
-
+  title: readiness and liveness health endpoints
+  brief: An HTTP server exposing /healthz and /readyz endpoints for container orchestration
+    checks.
 - id: ts-playwright-auth-fixture
   status: pending
   language: typescript
   path: qa-automation/typescript/playwright_auth_fixture.ts
-  title: "Playwright fixture for authenticated sessions"
-  brief: "A custom Playwright fixture that logs in once and reuses the authenticated browser context across tests."
-
+  title: Playwright fixture for authenticated sessions
+  brief: A custom Playwright fixture that logs in once and reuses the authenticated
+    browser context across tests.
 - id: js-postman-schema-test
   status: pending
   language: javascript
   path: qa-automation/javascript/postman_schema_test.js
-  title: "Postman test script validating a JSON schema"
-  brief: "A test script that validates a response body against a JSON schema before asserting on fields."
-
+  title: Postman test script validating a JSON schema
+  brief: A test script that validates a response body against a JSON schema before
+    asserting on fields.
 - id: ts-test-data-factory
   status: pending
   language: typescript
   path: qa-automation/typescript/test_data_factory.ts
-  title: "test data factory"
-  brief: "A typed factory using Faker to generate realistic test fixtures for common QA scenarios."
-
+  title: test data factory
+  brief: A typed factory using Faker to generate realistic test fixtures for common
+    QA scenarios.
 - id: go-docker-compose-validator
   status: pending
   language: go
   path: backend/go/docker_compose_validator.go
-  title: "docker-compose validator"
-  brief: "A tool that parses a docker-compose.yml and checks that required services and ports are declared."
+  title: docker-compose validator
+  brief: A tool that parses a docker-compose.yml and checks that required services
+    and ports are declared.

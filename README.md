@@ -20,7 +20,7 @@ I review new entries as they land and expand the ones worth building on further.
 ## Index
 
 <!-- AUTO-GENERATED-INDEX-START -->
-_(entries appear here automatically as they're generated)_
+- [LRU cache implementation](data-structures/python/lru_cache.py) — A fixed-capacity LRU cache using an OrderedDict, with get/put in O(1).
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
