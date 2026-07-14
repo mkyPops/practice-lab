@@ -18,7 +18,7 @@
   title: debounce and throttle utilities
   brief: Generic, typed debounce() and throttle() higher-order functions.
 - id: py-drf-serializer
-  status: pending
+  status: done
   language: python
   path: backend/python/drf_nested_serializer.py
   title: DRF nested serializer with validation
