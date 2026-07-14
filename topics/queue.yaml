@@ -12,7 +12,7 @@
   brief: A worker pool with a fixed goroutine count pulling jobs from a channel, with
     graceful shutdown via context cancellation.
 - id: ts-debounce-throttle
-  status: pending
+  status: done
   language: typescript
   path: algorithms/typescript/debounce_throttle.ts
   title: debounce and throttle utilities

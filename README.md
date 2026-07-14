@@ -22,6 +22,7 @@ I review new entries as they land and expand the ones worth building on further.
 <!-- AUTO-GENERATED-INDEX-START -->
 - [LRU cache implementation](data-structures/python/lru_cache.py) — A fixed-capacity LRU cache using an OrderedDict, with get/put in O(1).
 - [bounded worker pool](backend/go/worker_pool.go) — A worker pool with a fixed goroutine count pulling jobs from a channel, with graceful shutdown via context cancellation.
+- [debounce and throttle utilities](algorithms/typescript/debounce_throttle.ts) — Generic, typed debounce() and throttle() higher-order functions.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
