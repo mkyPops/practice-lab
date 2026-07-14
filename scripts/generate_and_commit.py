@@ -92,6 +92,7 @@ def commit_and_push(item: dict) -> tuple[str, str]:
     run(["git", "add", item["path"], "topics/queue.yaml", "README.md"])
     message = f"Add {item['title']}"
     run(["git", "commit", "-m", message])
+    run(["git", "pull", "--rebase", "origin", "main"])
     run(["git", "push"])
     result = subprocess.run(
         ["git", "rev-parse", "HEAD"], cwd=REPO_ROOT,
