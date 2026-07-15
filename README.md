@@ -24,6 +24,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [bounded worker pool](backend/go/worker_pool.go) — A worker pool with a fixed goroutine count pulling jobs from a channel, with graceful shutdown via context cancellation.
 - [debounce and throttle utilities](algorithms/typescript/debounce_throttle.ts) — Generic, typed debounce() and throttle() higher-order functions.
 - [DRF nested serializer with validation](backend/python/drf_nested_serializer.py) — A Django REST Framework serializer handling nested writes and field-level validation.
+- [Playwright page object for a login flow](qa-automation/typescript/login_page_object.ts) — A Page Object Model class wrapping a login form, using explicit waits and locator best practices.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout

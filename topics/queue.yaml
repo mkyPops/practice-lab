@@ -25,7 +25,7 @@
   brief: A Django REST Framework serializer handling nested writes and field-level
     validation.
 - id: playwright-pom-login
-  status: pending
+  status: done
   language: typescript
   path: qa-automation/typescript/login_page_object.ts
   title: Playwright page object for a login flow
