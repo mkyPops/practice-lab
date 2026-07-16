@@ -32,7 +32,7 @@
   brief: A Page Object Model class wrapping a login form, using explicit waits and
     locator best practices.
 - id: cpp-binary-search-variants
-  status: pending
+  status: done
   language: cpp
   path: algorithms/cpp/binary_search_variants.cpp
   title: 'binary search: first and last occurrence'
