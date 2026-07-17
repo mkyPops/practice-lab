@@ -26,6 +26,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [DRF nested serializer with validation](backend/python/drf_nested_serializer.py) — A Django REST Framework serializer handling nested writes and field-level validation.
 - [Playwright page object for a login flow](qa-automation/typescript/login_page_object.ts) — A Page Object Model class wrapping a login form, using explicit waits and locator best practices.
 - [binary search: first and last occurrence](algorithms/cpp/binary_search_variants.cpp) — Lower-bound and upper-bound style binary search over a sorted vector.
+- [Redis caching decorator](backend/python/redis_cache_decorator.py) — A decorator that caches function results in Redis with a TTL and a hashed cache key.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout

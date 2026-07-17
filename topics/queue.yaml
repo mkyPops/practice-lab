@@ -38,7 +38,7 @@
   title: 'binary search: first and last occurrence'
   brief: Lower-bound and upper-bound style binary search over a sorted vector.
 - id: redis-cache-decorator
-  status: pending
+  status: done
   language: python
   path: backend/python/redis_cache_decorator.py
   title: Redis caching decorator
