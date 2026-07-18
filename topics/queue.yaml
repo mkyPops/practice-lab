@@ -45,7 +45,7 @@
   brief: A decorator that caches function results in Redis with a TTL and a hashed
     cache key.
 - id: postman-pretest-auth
-  status: pending
+  status: done
   language: javascript
   path: qa-automation/javascript/postman_pretest_auth.js
   title: Postman pre-request auth token script
