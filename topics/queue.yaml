@@ -52,7 +52,7 @@
   brief: Pre-request script that fetches/refreshes a bearer token and injects it into
     the outgoing request.
 - id: java-generic-stack
-  status: pending
+  status: done
   language: java
   path: data-structures/java/BoundedStack.java
   title: generic array-backed stack with dynamic resizing

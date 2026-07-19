@@ -28,6 +28,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [binary search: first and last occurrence](algorithms/cpp/binary_search_variants.cpp) — Lower-bound and upper-bound style binary search over a sorted vector.
 - [Redis caching decorator](backend/python/redis_cache_decorator.py) — A decorator that caches function results in Redis with a TTL and a hashed cache key.
 - [Postman pre-request auth token script](qa-automation/javascript/postman_pretest_auth.js) — Pre-request script that fetches/refreshes a bearer token and injects it into the outgoing request.
+- [generic array-backed stack with dynamic resizing](data-structures/java/BoundedStack.java) — A generic Stack<T> backed by an array that doubles capacity when full and halves it when sparsely used.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
