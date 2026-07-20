@@ -59,7 +59,7 @@
   brief: A generic Stack<T> backed by an array that doubles capacity when full and
     halves it when sparsely used.
 - id: py-trie
-  status: pending
+  status: done
   language: python
   path: data-structures/python/trie.py
   title: trie (prefix tree) implementation
