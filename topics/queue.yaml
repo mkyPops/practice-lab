@@ -65,7 +65,7 @@
   title: trie (prefix tree) implementation
   brief: A Trie supporting insert, search, and startsWith prefix lookups.
 - id: go-union-find
-  status: pending
+  status: done
   language: go
   path: data-structures/go/union_find.go
   title: union-find with path compression

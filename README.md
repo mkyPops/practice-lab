@@ -30,6 +30,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [Postman pre-request auth token script](qa-automation/javascript/postman_pretest_auth.js) — Pre-request script that fetches/refreshes a bearer token and injects it into the outgoing request.
 - [generic array-backed stack with dynamic resizing](data-structures/java/BoundedStack.java) — A generic Stack<T> backed by an array that doubles capacity when full and halves it when sparsely used.
 - [trie (prefix tree) implementation](data-structures/python/trie.py) — A Trie supporting insert, search, and startsWith prefix lookups.
+- [union-find with path compression](data-structures/go/union_find.go) — A Disjoint Set Union structure with path compression and union by rank.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
