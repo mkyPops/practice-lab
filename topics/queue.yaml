@@ -71,7 +71,7 @@
   title: union-find with path compression
   brief: A Disjoint Set Union structure with path compression and union by rank.
 - id: ts-bst
-  status: pending
+  status: done
   language: typescript
   path: data-structures/typescript/binary_search_tree.ts
   title: binary search tree with in-order traversal
