@@ -32,6 +32,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [trie (prefix tree) implementation](data-structures/python/trie.py) — A Trie supporting insert, search, and startsWith prefix lookups.
 - [union-find with path compression](data-structures/go/union_find.go) — A Disjoint Set Union structure with path compression and union by rank.
 - [binary search tree with in-order traversal](data-structures/typescript/binary_search_tree.ts) — A BST supporting insert, search, and an in-order traversal that returns sorted keys.
+- [merge sort implementation](algorithms/cpp/merge_sort.cpp) — A stable merge sort over a vector, with the merge step split out for clarity.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout

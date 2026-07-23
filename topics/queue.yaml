@@ -78,7 +78,7 @@
   brief: A BST supporting insert, search, and an in-order traversal that returns sorted
     keys.
 - id: cpp-merge-sort
-  status: pending
+  status: done
   language: cpp
   path: algorithms/cpp/merge_sort.cpp
   title: merge sort implementation
