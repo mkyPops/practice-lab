@@ -84,7 +84,7 @@
   title: merge sort implementation
   brief: A stable merge sort over a vector, with the merge step split out for clarity.
 - id: java-min-heap
-  status: pending
+  status: done
   language: java
   path: data-structures/java/MinHeap.java
   title: generic min-heap

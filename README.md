@@ -33,6 +33,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [union-find with path compression](data-structures/go/union_find.go) — A Disjoint Set Union structure with path compression and union by rank.
 - [binary search tree with in-order traversal](data-structures/typescript/binary_search_tree.ts) — A BST supporting insert, search, and an in-order traversal that returns sorted keys.
 - [merge sort implementation](algorithms/cpp/merge_sort.cpp) — A stable merge sort over a vector, with the merge step split out for clarity.
+- [generic min-heap](data-structures/java/MinHeap.java) — A generic MinHeap<T extends Comparable<T>> backed by an array, with sift-up/sift-down.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
