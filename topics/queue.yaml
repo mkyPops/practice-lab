@@ -90,7 +90,7 @@
   title: generic min-heap
   brief: A generic MinHeap<T extends Comparable<T>> backed by an array, with sift-up/sift-down.
 - id: py-graph-traversal
-  status: pending
+  status: done
   language: python
   path: algorithms/python/graph_traversal.py
   title: graph BFS and DFS traversal
