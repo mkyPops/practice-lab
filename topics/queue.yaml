@@ -97,7 +97,7 @@
   brief: Breadth-first and depth-first traversal over a graph represented as an adjacency
     list.
 - id: cpp-quicksort
-  status: pending
+  status: done
   language: cpp
   path: algorithms/cpp/quicksort.cpp
   title: quicksort with median-of-three pivot

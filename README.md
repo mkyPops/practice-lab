@@ -35,6 +35,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [merge sort implementation](algorithms/cpp/merge_sort.cpp) — A stable merge sort over a vector, with the merge step split out for clarity.
 - [generic min-heap](data-structures/java/MinHeap.java) — A generic MinHeap<T extends Comparable<T>> backed by an array, with sift-up/sift-down.
 - [graph BFS and DFS traversal](algorithms/python/graph_traversal.py) — Breadth-first and depth-first traversal over a graph represented as an adjacency list.
+- [quicksort with median-of-three pivot](algorithms/cpp/quicksort.cpp) — An in-place quicksort using median-of-three pivot selection to avoid worst-case behavior on sorted input.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
