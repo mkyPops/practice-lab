@@ -36,6 +36,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [generic min-heap](data-structures/java/MinHeap.java) — A generic MinHeap<T extends Comparable<T>> backed by an array, with sift-up/sift-down.
 - [graph BFS and DFS traversal](algorithms/python/graph_traversal.py) — Breadth-first and depth-first traversal over a graph represented as an adjacency list.
 - [quicksort with median-of-three pivot](algorithms/cpp/quicksort.cpp) — An in-place quicksort using median-of-three pivot selection to avoid worst-case behavior on sorted input.
+- [singly linked list](data-structures/typescript/linked_list.ts) — A singly linked list with append, prepend, delete, and reverse operations.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout

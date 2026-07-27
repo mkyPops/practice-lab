@@ -104,7 +104,7 @@
   brief: An in-place quicksort using median-of-three pivot selection to avoid worst-case
     behavior on sorted input.
 - id: ts-linked-list
-  status: pending
+  status: done
   language: typescript
   path: data-structures/typescript/linked_list.ts
   title: singly linked list
