@@ -110,7 +110,7 @@
   title: singly linked list
   brief: A singly linked list with append, prepend, delete, and reverse operations.
 - id: js-memoize
-  status: pending
+  status: done
   language: javascript
   path: algorithms/javascript/memoize.js
   title: memoization utility
