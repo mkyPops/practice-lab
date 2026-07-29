@@ -116,7 +116,7 @@
   title: memoization utility
   brief: A generic memoize() higher-order function caching results by argument signature.
 - id: go-rate-limiter
-  status: pending
+  status: done
   language: go
   path: backend/go/rate_limiter.go
   title: token bucket rate limiter

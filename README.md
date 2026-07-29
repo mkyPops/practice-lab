@@ -38,6 +38,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [quicksort with median-of-three pivot](algorithms/cpp/quicksort.cpp) — An in-place quicksort using median-of-three pivot selection to avoid worst-case behavior on sorted input.
 - [singly linked list](data-structures/typescript/linked_list.ts) — A singly linked list with append, prepend, delete, and reverse operations.
 - [memoization utility](algorithms/javascript/memoize.js) — A generic memoize() higher-order function caching results by argument signature.
+- [token bucket rate limiter](backend/go/rate_limiter.go) — A rate limiter using the token bucket algorithm, safe for concurrent use.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
