@@ -122,7 +122,7 @@
   title: token bucket rate limiter
   brief: A rate limiter using the token bucket algorithm, safe for concurrent use.
 - id: py-django-jwt-middleware
-  status: pending
+  status: done
   language: python
   path: backend/python/django_jwt_middleware.py
   title: JWT authentication middleware for Django

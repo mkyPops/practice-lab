@@ -39,6 +39,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [singly linked list](data-structures/typescript/linked_list.ts) — A singly linked list with append, prepend, delete, and reverse operations.
 - [memoization utility](algorithms/javascript/memoize.js) — A generic memoize() higher-order function caching results by argument signature.
 - [token bucket rate limiter](backend/go/rate_limiter.go) — A rate limiter using the token bucket algorithm, safe for concurrent use.
+- [JWT authentication middleware for Django](backend/python/django_jwt_middleware.py) — Middleware that validates a bearer JWT on incoming requests and attaches the user to the request.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
