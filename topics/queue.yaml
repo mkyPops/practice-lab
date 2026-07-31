@@ -129,7 +129,7 @@
   brief: Middleware that validates a bearer JWT on incoming requests and attaches
     the user to the request.
 - id: py-django-mgmt-command
-  status: pending
+  status: done
   language: python
   path: backend/python/django_management_command.py
   title: custom Django management command
