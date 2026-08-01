@@ -41,6 +41,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [token bucket rate limiter](backend/go/rate_limiter.go) — A rate limiter using the token bucket algorithm, safe for concurrent use.
 - [JWT authentication middleware for Django](backend/python/django_jwt_middleware.py) — Middleware that validates a bearer JWT on incoming requests and attaches the user to the request.
 - [custom Django management command](backend/python/django_management_command.py) — A management command that accepts arguments and performs a bulk data operation with progress output.
+- [Celery task with retry and backoff](backend/python/celery_retry_task.py) — A Celery task that retries transient failures with exponential backoff and a max retry cap.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout

@@ -136,7 +136,7 @@
   brief: A management command that accepts arguments and performs a bulk data operation
     with progress output.
 - id: py-celery-retry
-  status: pending
+  status: done
   language: python
   path: backend/python/celery_retry_task.py
   title: Celery task with retry and backoff
