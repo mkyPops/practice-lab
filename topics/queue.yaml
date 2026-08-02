@@ -143,7 +143,7 @@
   brief: A Celery task that retries transient failures with exponential backoff and
     a max retry cap.
 - id: py-circuit-breaker
-  status: pending
+  status: done
   language: python
   path: backend/python/circuit_breaker.py
   title: circuit breaker decorator
