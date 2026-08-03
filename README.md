@@ -43,6 +43,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [custom Django management command](backend/python/django_management_command.py) — A management command that accepts arguments and performs a bulk data operation with progress output.
 - [Celery task with retry and backoff](backend/python/celery_retry_task.py) — A Celery task that retries transient failures with exponential backoff and a max retry cap.
 - [circuit breaker decorator](backend/python/circuit_breaker.py) — A decorator implementing the circuit breaker pattern to stop calling a failing dependency temporarily.
+- [HTTP client with exponential backoff](backend/python/backoff_http_client.py) — A requests-based HTTP client wrapper that retries failed calls with exponential backoff and jitter.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout

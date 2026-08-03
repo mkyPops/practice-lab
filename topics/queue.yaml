@@ -150,7 +150,7 @@
   brief: A decorator implementing the circuit breaker pattern to stop calling a failing
     dependency temporarily.
 - id: py-backoff-client
-  status: pending
+  status: done
   language: python
   path: backend/python/backoff_http_client.py
   title: HTTP client with exponential backoff
