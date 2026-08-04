@@ -157,7 +157,7 @@
   brief: A requests-based HTTP client wrapper that retries failed calls with exponential
     backoff and jitter.
 - id: go-health-endpoint
-  status: pending
+  status: done
   language: go
   path: backend/go/health_endpoint.go
   title: readiness and liveness health endpoints

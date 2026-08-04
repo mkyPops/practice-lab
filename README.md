@@ -44,6 +44,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [Celery task with retry and backoff](backend/python/celery_retry_task.py) — A Celery task that retries transient failures with exponential backoff and a max retry cap.
 - [circuit breaker decorator](backend/python/circuit_breaker.py) — A decorator implementing the circuit breaker pattern to stop calling a failing dependency temporarily.
 - [HTTP client with exponential backoff](backend/python/backoff_http_client.py) — A requests-based HTTP client wrapper that retries failed calls with exponential backoff and jitter.
+- [readiness and liveness health endpoints](backend/go/health_endpoint.go) — An HTTP server exposing /healthz and /readyz endpoints for container orchestration checks.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
