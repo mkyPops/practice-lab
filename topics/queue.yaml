@@ -171,7 +171,7 @@
   brief: A custom Playwright fixture that logs in once and reuses the authenticated
     browser context across tests.
 - id: js-postman-schema-test
-  status: pending
+  status: done
   language: javascript
   path: qa-automation/javascript/postman_schema_test.js
   title: Postman test script validating a JSON schema

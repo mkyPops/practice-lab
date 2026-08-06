@@ -46,6 +46,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [HTTP client with exponential backoff](backend/python/backoff_http_client.py) — A requests-based HTTP client wrapper that retries failed calls with exponential backoff and jitter.
 - [readiness and liveness health endpoints](backend/go/health_endpoint.go) — An HTTP server exposing /healthz and /readyz endpoints for container orchestration checks.
 - [Playwright fixture for authenticated sessions](qa-automation/typescript/playwright_auth_fixture.ts) — A custom Playwright fixture that logs in once and reuses the authenticated browser context across tests.
+- [Postman test script validating a JSON schema](qa-automation/javascript/postman_schema_test.js) — A test script that validates a response body against a JSON schema before asserting on fields.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
