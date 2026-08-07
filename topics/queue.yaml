@@ -178,7 +178,7 @@
   brief: A test script that validates a response body against a JSON schema before
     asserting on fields.
 - id: ts-test-data-factory
-  status: pending
+  status: done
   language: typescript
   path: qa-automation/typescript/test_data_factory.ts
   title: test data factory
