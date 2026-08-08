@@ -48,6 +48,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [Playwright fixture for authenticated sessions](qa-automation/typescript/playwright_auth_fixture.ts) — A custom Playwright fixture that logs in once and reuses the authenticated browser context across tests.
 - [Postman test script validating a JSON schema](qa-automation/javascript/postman_schema_test.js) — A test script that validates a response body against a JSON schema before asserting on fields.
 - [test data factory](qa-automation/typescript/test_data_factory.ts) — A typed factory using Faker to generate realistic test fixtures for common QA scenarios.
+- [docker-compose validator](backend/go/docker_compose_validator.go) — A tool that parses a docker-compose.yml and checks that required services and ports are declared.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout

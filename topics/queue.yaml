@@ -185,7 +185,7 @@
   brief: A typed factory using Faker to generate realistic test fixtures for common
     QA scenarios.
 - id: go-docker-compose-validator
-  status: pending
+  status: done
   language: go
   path: backend/go/docker_compose_validator.go
   title: docker-compose validator
