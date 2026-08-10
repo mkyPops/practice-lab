@@ -191,3 +191,212 @@
   title: docker-compose validator
   brief: A tool that parses a docker-compose.yml and checks that required services
     and ports are declared.
+  - id: py-bloom-filter
+  status: pending
+  language: python
+  path: data-structures/python/bloom_filter.py
+  title: "bloom filter implementation"
+  brief: "A space-efficient probabilistic data structure using multiple hash functions to test set membership."
+
+- id: go-semaphore
+  status: pending
+  language: go
+  path: backend/go/semaphore.go
+  title: "semaphore for goroutine concurrency control"
+  brief: "A semaphore primitive using a buffered channel to limit concurrent goroutine execution."
+
+- id: ts-event-emitter
+  status: pending
+  language: typescript
+  path: algorithms/typescript/event_emitter.ts
+  title: "typed event emitter"
+  brief: "A generic, strongly-typed EventEmitter supporting on, off, once, and emit with typed payloads."
+
+- id: py-sliding-window
+  status: pending
+  language: python
+  path: algorithms/python/sliding_window.py
+  title: "sliding window maximum"
+  brief: "Find the maximum value in every sliding window of size k using a deque for O(n) time complexity."
+
+- id: cpp-avl-tree
+  status: pending
+  language: cpp
+  path: data-structures/cpp/avl_tree.cpp
+  title: "AVL self-balancing binary search tree"
+  brief: "An AVL tree with insert and search, performing left/right rotations to maintain balance after every insert."
+
+- id: java-thread-safe-counter
+  status: pending
+  language: java
+  path: backend/java/ThreadSafeCounter.java
+  title: "thread-safe counter with AtomicLong"
+  brief: "A thread-safe counter using AtomicLong, with increment, decrement, reset, and compare-and-swap operations."
+
+- id: py-consistent-hashing
+  status: pending
+  language: python
+  path: backend/python/consistent_hashing.py
+  title: "consistent hashing ring"
+  brief: "A consistent hashing ring for distributing keys across nodes with minimal remapping when nodes are added or removed."
+
+- id: go-pipeline-pattern
+  status: pending
+  language: go
+  path: backend/go/pipeline_pattern.go
+  title: "pipeline pattern with channels"
+  brief: "A multi-stage data processing pipeline using Go channels, where each stage transforms data and passes it downstream."
+
+- id: ts-observable
+  status: pending
+  language: typescript
+  path: algorithms/typescript/observable.ts
+  title: "simple observable pattern"
+  brief: "A minimal Observable implementation with subscribe, map, filter, and unsubscribe support."
+
+- id: py-two-sum-variants
+  status: pending
+  language: python
+  path: algorithms/python/two_sum_variants.py
+  title: "two sum and three sum algorithms"
+  brief: "Two Sum using a hash map in O(n), and Three Sum using sorting plus two pointers in O(n²)."
+
+- id: cpp-graph-dijkstra
+  status: pending
+  language: cpp
+  path: algorithms/cpp/dijkstra.cpp
+  title: "Dijkstra shortest path algorithm"
+  brief: "Dijkstra's algorithm using a priority queue over an adjacency list graph representation."
+
+- id: py-decorator-patterns
+  status: pending
+  language: python
+  path: backend/python/decorator_patterns.py
+  title: "practical decorator patterns"
+  brief: "A set of reusable decorators: retry, timer, rate_limit, and singleton — each with real-world usage examples."
+
+- id: go-json-logger
+  status: pending
+  language: go
+  path: backend/go/json_logger.go
+  title: "structured JSON logger"
+  brief: "A lightweight structured logger that writes JSON lines with level, timestamp, message, and arbitrary fields."
+
+- id: ts-playwright-api-client
+  status: pending
+  language: typescript
+  path: qa-automation/typescript/playwright_api_client.ts
+  title: "Playwright API testing client"
+  brief: "A typed wrapper around Playwright's APIRequestContext for REST API testing with built-in response validation helpers."
+
+- id: js-deep-clone
+  status: pending
+  language: javascript
+  path: algorithms/javascript/deep_clone.js
+  title: "deep clone utility"
+  brief: "A deep clone function handling nested objects, arrays, dates, maps, sets, and circular references."
+
+- id: py-segment-tree
+  status: pending
+  language: python
+  path: data-structures/python/segment_tree.py
+  title: "segment tree for range queries"
+  brief: "A segment tree supporting range sum queries and point updates in O(log n)."
+
+- id: java-producer-consumer
+  status: pending
+  language: java
+  path: backend/java/ProducerConsumer.java
+  title: "producer-consumer with BlockingQueue"
+  brief: "A producer-consumer implementation using a LinkedBlockingQueue, with multiple producers and consumers running concurrently."
+
+- id: py-drf-pagination
+  status: pending
+  language: python
+  path: backend/python/drf_custom_pagination.py
+  title: "custom DRF cursor pagination"
+  brief: "A cursor-based pagination class for Django REST Framework that encodes the position as an opaque token."
+
+- id: go-graceful-shutdown
+  status: pending
+  language: go
+  path: backend/go/graceful_shutdown.go
+  title: "graceful HTTP server shutdown"
+  brief: "An HTTP server that catches OS signals and performs a graceful shutdown with a configurable drain timeout."
+
+- id: ts-retry-utility
+  status: pending
+  language: typescript
+  path: algorithms/typescript/retry.ts
+  title: "async retry with exponential backoff"
+  brief: "A generic async retry utility with configurable attempts, exponential backoff, jitter, and an abort condition."
+
+- id: py-topological-sort
+  status: pending
+  language: python
+  path: algorithms/python/topological_sort.py
+  title: "topological sort with cycle detection"
+  brief: "Topological sort using Kahn's algorithm, returning a sorted order or raising an error if a cycle is detected."
+
+- id: cpp-string-algorithms
+  status: pending
+  language: cpp
+  path: algorithms/cpp/string_algorithms.cpp
+  title: "KMP and Rabin-Karp string search"
+  brief: "KMP pattern matching with failure function construction, and Rabin-Karp rolling hash search."
+
+- id: py-pytest-fixtures
+  status: pending
+  language: python
+  path: qa-automation/python/pytest_fixtures.py
+  title: "reusable pytest fixtures for API testing"
+  brief: "A conftest.py with session-scoped fixtures for a test client, auth token, and database cleanup."
+
+- id: go-middleware-chain
+  status: pending
+  language: go
+  path: backend/go/middleware_chain.go
+  title: "composable HTTP middleware chain"
+  brief: "A middleware chaining utility for net/http with logging, recovery, and request-ID injection middleware included."
+
+- id: ts-state-machine
+  status: pending
+  language: typescript
+  path: algorithms/typescript/state_machine.ts
+  title: "finite state machine"
+  brief: "A typed finite state machine with defined states, transitions, guard conditions, and entry/exit hooks."
+
+- id: py-heap-algorithms
+  status: pending
+  language: python
+  path: algorithms/python/heap_algorithms.py
+  title: "heap-based algorithms"
+  brief: "K largest elements, merge K sorted lists, and the median of a data stream — all using Python's heapq module."
+
+- id: java-lru-cache
+  status: pending
+  language: java
+  path: data-structures/java/LRUCache.java
+  title: "LRU cache with LinkedHashMap"
+  brief: "A generic LRU cache backed by a LinkedHashMap in access order, with O(1) get and put."
+
+- id: py-cli-tool
+  status: pending
+  language: python
+  path: backend/python/cli_tool.py
+  title: "CLI tool with argparse and subcommands"
+  brief: "A multi-subcommand CLI tool using argparse, with a config file loader, coloured output, and error handling."
+
+- id: go-config-loader
+  status: pending
+  language: go
+  path: backend/go/config_loader.go
+  title: "environment-aware config loader"
+  brief: "A config loader that merges a YAML file with environment variable overrides, with validation and typed accessors."
+
+- id: ts-playwright-visual-diff
+  status: pending
+  language: typescript
+  path: qa-automation/typescript/playwright_visual_diff.ts
+  title: "Playwright visual regression test helper"
+  brief: "A helper wrapping Playwright's screenshot comparison with configurable thresholds and annotated diff output on failure."  
