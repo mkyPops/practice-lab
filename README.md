@@ -50,6 +50,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [test data factory](qa-automation/typescript/test_data_factory.ts) — A typed factory using Faker to generate realistic test fixtures for common QA scenarios.
 - [docker-compose validator](backend/go/docker_compose_validator.go) — A tool that parses a docker-compose.yml and checks that required services and ports are declared.
 - [bloom filter implementation](data-structures/python/bloom_filter.py) — A space-efficient probabilistic data structure using multiple hash functions to test set membership.
+- [semaphore for goroutine concurrency control](backend/go/semaphore.go) — A semaphore primitive using a buffered channel to limit concurrent goroutine execution.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
