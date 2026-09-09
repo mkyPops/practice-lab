@@ -4,6 +4,7 @@
   path: data-structures/python/lru_cache.py
   title: LRU cache implementation
   brief: A fixed-capacity LRU cache using an OrderedDict, with get/put in O(1).
+
 - id: go-worker-pool
   status: done
   language: go
@@ -11,12 +12,14 @@
   title: bounded worker pool
   brief: A worker pool with a fixed goroutine count pulling jobs from a channel, with
     graceful shutdown via context cancellation.
+
 - id: ts-debounce-throttle
   status: done
   language: typescript
   path: algorithms/typescript/debounce_throttle.ts
   title: debounce and throttle utilities
   brief: Generic, typed debounce() and throttle() higher-order functions.
+
 - id: py-drf-serializer
   status: done
   language: python
@@ -24,6 +27,7 @@
   title: DRF nested serializer with validation
   brief: A Django REST Framework serializer handling nested writes and field-level
     validation.
+
 - id: playwright-pom-login
   status: done
   language: typescript
@@ -31,12 +35,14 @@
   title: Playwright page object for a login flow
   brief: A Page Object Model class wrapping a login form, using explicit waits and
     locator best practices.
+
 - id: cpp-binary-search-variants
   status: done
   language: cpp
   path: algorithms/cpp/binary_search_variants.cpp
   title: 'binary search: first and last occurrence'
   brief: Lower-bound and upper-bound style binary search over a sorted vector.
+
 - id: redis-cache-decorator
   status: done
   language: python
@@ -44,6 +50,7 @@
   title: Redis caching decorator
   brief: A decorator that caches function results in Redis with a TTL and a hashed
     cache key.
+
 - id: postman-pretest-auth
   status: done
   language: javascript
@@ -51,6 +58,7 @@
   title: Postman pre-request auth token script
   brief: Pre-request script that fetches/refreshes a bearer token and injects it into
     the outgoing request.
+
 - id: java-generic-stack
   status: done
   language: java
@@ -58,18 +66,21 @@
   title: generic array-backed stack with dynamic resizing
   brief: A generic Stack<T> backed by an array that doubles capacity when full and
     halves it when sparsely used.
+
 - id: py-trie
   status: done
   language: python
   path: data-structures/python/trie.py
   title: trie (prefix tree) implementation
   brief: A Trie supporting insert, search, and startsWith prefix lookups.
+
 - id: go-union-find
   status: done
   language: go
   path: data-structures/go/union_find.go
   title: union-find with path compression
   brief: A Disjoint Set Union structure with path compression and union by rank.
+
 - id: ts-bst
   status: done
   language: typescript
@@ -77,18 +88,21 @@
   title: binary search tree with in-order traversal
   brief: A BST supporting insert, search, and an in-order traversal that returns sorted
     keys.
+
 - id: cpp-merge-sort
   status: done
   language: cpp
   path: algorithms/cpp/merge_sort.cpp
   title: merge sort implementation
   brief: A stable merge sort over a vector, with the merge step split out for clarity.
+
 - id: java-min-heap
   status: done
   language: java
   path: data-structures/java/MinHeap.java
   title: generic min-heap
   brief: A generic MinHeap<T extends Comparable<T>> backed by an array, with sift-up/sift-down.
+
 - id: py-graph-traversal
   status: done
   language: python
@@ -96,6 +110,7 @@
   title: graph BFS and DFS traversal
   brief: Breadth-first and depth-first traversal over a graph represented as an adjacency
     list.
+
 - id: cpp-quicksort
   status: done
   language: cpp
@@ -103,24 +118,28 @@
   title: quicksort with median-of-three pivot
   brief: An in-place quicksort using median-of-three pivot selection to avoid worst-case
     behavior on sorted input.
+
 - id: ts-linked-list
   status: done
   language: typescript
   path: data-structures/typescript/linked_list.ts
   title: singly linked list
   brief: A singly linked list with append, prepend, delete, and reverse operations.
+
 - id: js-memoize
   status: done
   language: javascript
   path: algorithms/javascript/memoize.js
   title: memoization utility
   brief: A generic memoize() higher-order function caching results by argument signature.
+
 - id: go-rate-limiter
   status: done
   language: go
   path: backend/go/rate_limiter.go
   title: token bucket rate limiter
   brief: A rate limiter using the token bucket algorithm, safe for concurrent use.
+
 - id: py-django-jwt-middleware
   status: done
   language: python
@@ -128,6 +147,7 @@
   title: JWT authentication middleware for Django
   brief: Middleware that validates a bearer JWT on incoming requests and attaches
     the user to the request.
+
 - id: py-django-mgmt-command
   status: done
   language: python
@@ -135,6 +155,7 @@
   title: custom Django management command
   brief: A management command that accepts arguments and performs a bulk data operation
     with progress output.
+
 - id: py-celery-retry
   status: done
   language: python
@@ -142,6 +163,7 @@
   title: Celery task with retry and backoff
   brief: A Celery task that retries transient failures with exponential backoff and
     a max retry cap.
+
 - id: py-circuit-breaker
   status: done
   language: python
@@ -149,6 +171,7 @@
   title: circuit breaker decorator
   brief: A decorator implementing the circuit breaker pattern to stop calling a failing
     dependency temporarily.
+
 - id: py-backoff-client
   status: done
   language: python
@@ -156,6 +179,7 @@
   title: HTTP client with exponential backoff
   brief: A requests-based HTTP client wrapper that retries failed calls with exponential
     backoff and jitter.
+
 - id: go-health-endpoint
   status: done
   language: go
@@ -163,6 +187,7 @@
   title: readiness and liveness health endpoints
   brief: An HTTP server exposing /healthz and /readyz endpoints for container orchestration
     checks.
+
 - id: ts-playwright-auth-fixture
   status: done
   language: typescript
@@ -170,6 +195,7 @@
   title: Playwright fixture for authenticated sessions
   brief: A custom Playwright fixture that logs in once and reuses the authenticated
     browser context across tests.
+
 - id: js-postman-schema-test
   status: done
   language: javascript
@@ -177,6 +203,7 @@
   title: Postman test script validating a JSON schema
   brief: A test script that validates a response body against a JSON schema before
     asserting on fields.
+
 - id: ts-test-data-factory
   status: done
   language: typescript
@@ -184,6 +211,7 @@
   title: test data factory
   brief: A typed factory using Faker to generate realistic test fixtures for common
     QA scenarios.
+
 - id: go-docker-compose-validator
   status: done
   language: go
@@ -191,212 +219,213 @@
   title: docker-compose validator
   brief: A tool that parses a docker-compose.yml and checks that required services
     and ports are declared.
-  - id: py-bloom-filter
+
+- id: py-bloom-filter
   status: pending
   language: python
   path: data-structures/python/bloom_filter.py
-  title: "bloom filter implementation"
-  brief: "A space-efficient probabilistic data structure using multiple hash functions to test set membership."
+  title: bloom filter implementation
+  brief: A space-efficient probabilistic data structure using multiple hash functions to test set membership.
 
 - id: go-semaphore
   status: pending
   language: go
   path: backend/go/semaphore.go
-  title: "semaphore for goroutine concurrency control"
-  brief: "A semaphore primitive using a buffered channel to limit concurrent goroutine execution."
+  title: semaphore for goroutine concurrency control
+  brief: A semaphore primitive using a buffered channel to limit concurrent goroutine execution.
 
 - id: ts-event-emitter
   status: pending
   language: typescript
   path: algorithms/typescript/event_emitter.ts
-  title: "typed event emitter"
-  brief: "A generic, strongly-typed EventEmitter supporting on, off, once, and emit with typed payloads."
+  title: typed event emitter
+  brief: A generic, strongly-typed EventEmitter supporting on, off, once, and emit with typed payloads.
 
 - id: py-sliding-window
   status: pending
   language: python
   path: algorithms/python/sliding_window.py
-  title: "sliding window maximum"
-  brief: "Find the maximum value in every sliding window of size k using a deque for O(n) time complexity."
+  title: sliding window maximum
+  brief: Find the maximum value in every sliding window of size k using a deque for O(n) time complexity.
 
 - id: cpp-avl-tree
   status: pending
   language: cpp
   path: data-structures/cpp/avl_tree.cpp
-  title: "AVL self-balancing binary search tree"
-  brief: "An AVL tree with insert and search, performing left/right rotations to maintain balance after every insert."
+  title: AVL self-balancing binary search tree
+  brief: An AVL tree with insert and search, performing left/right rotations to maintain balance after every insert.
 
 - id: java-thread-safe-counter
   status: pending
   language: java
   path: backend/java/ThreadSafeCounter.java
-  title: "thread-safe counter with AtomicLong"
-  brief: "A thread-safe counter using AtomicLong, with increment, decrement, reset, and compare-and-swap operations."
+  title: thread-safe counter with AtomicLong
+  brief: A thread-safe counter using AtomicLong, with increment, decrement, reset, and compare-and-swap operations.
 
 - id: py-consistent-hashing
   status: pending
   language: python
   path: backend/python/consistent_hashing.py
-  title: "consistent hashing ring"
-  brief: "A consistent hashing ring for distributing keys across nodes with minimal remapping when nodes are added or removed."
+  title: consistent hashing ring
+  brief: A consistent hashing ring for distributing keys across nodes with minimal remapping when nodes are added or removed.
 
 - id: go-pipeline-pattern
   status: pending
   language: go
   path: backend/go/pipeline_pattern.go
-  title: "pipeline pattern with channels"
-  brief: "A multi-stage data processing pipeline using Go channels, where each stage transforms data and passes it downstream."
+  title: pipeline pattern with channels
+  brief: A multi-stage data processing pipeline using Go channels, where each stage transforms data and passes it downstream.
 
 - id: ts-observable
   status: pending
   language: typescript
   path: algorithms/typescript/observable.ts
-  title: "simple observable pattern"
-  brief: "A minimal Observable implementation with subscribe, map, filter, and unsubscribe support."
+  title: simple observable pattern
+  brief: A minimal Observable implementation with subscribe, map, filter, and unsubscribe support.
 
 - id: py-two-sum-variants
   status: pending
   language: python
   path: algorithms/python/two_sum_variants.py
-  title: "two sum and three sum algorithms"
-  brief: "Two Sum using a hash map in O(n), and Three Sum using sorting plus two pointers in O(n²)."
+  title: two sum and three sum algorithms
+  brief: Two Sum using a hash map in O(n), and Three Sum using sorting plus two pointers in O(n2).
 
 - id: cpp-graph-dijkstra
   status: pending
   language: cpp
   path: algorithms/cpp/dijkstra.cpp
-  title: "Dijkstra shortest path algorithm"
-  brief: "Dijkstra's algorithm using a priority queue over an adjacency list graph representation."
+  title: Dijkstra shortest path algorithm
+  brief: Dijkstra's algorithm using a priority queue over an adjacency list graph representation.
 
 - id: py-decorator-patterns
   status: pending
   language: python
   path: backend/python/decorator_patterns.py
-  title: "practical decorator patterns"
-  brief: "A set of reusable decorators: retry, timer, rate_limit, and singleton — each with real-world usage examples."
+  title: practical decorator patterns
+  brief: "A set of reusable decorators: retry, timer, rate_limit, and singleton, each with real-world usage examples."
 
 - id: go-json-logger
   status: pending
   language: go
   path: backend/go/json_logger.go
-  title: "structured JSON logger"
-  brief: "A lightweight structured logger that writes JSON lines with level, timestamp, message, and arbitrary fields."
+  title: structured JSON logger
+  brief: A lightweight structured logger that writes JSON lines with level, timestamp, message, and arbitrary fields.
 
 - id: ts-playwright-api-client
   status: pending
   language: typescript
   path: qa-automation/typescript/playwright_api_client.ts
-  title: "Playwright API testing client"
-  brief: "A typed wrapper around Playwright's APIRequestContext for REST API testing with built-in response validation helpers."
+  title: Playwright API testing client
+  brief: A typed wrapper around Playwright's APIRequestContext for REST API testing with built-in response validation helpers.
 
 - id: js-deep-clone
   status: pending
   language: javascript
   path: algorithms/javascript/deep_clone.js
-  title: "deep clone utility"
-  brief: "A deep clone function handling nested objects, arrays, dates, maps, sets, and circular references."
+  title: deep clone utility
+  brief: A deep clone function handling nested objects, arrays, dates, maps, sets, and circular references.
 
 - id: py-segment-tree
   status: pending
   language: python
   path: data-structures/python/segment_tree.py
-  title: "segment tree for range queries"
-  brief: "A segment tree supporting range sum queries and point updates in O(log n)."
+  title: segment tree for range queries
+  brief: A segment tree supporting range sum queries and point updates in O(log n).
 
 - id: java-producer-consumer
   status: pending
   language: java
   path: backend/java/ProducerConsumer.java
-  title: "producer-consumer with BlockingQueue"
-  brief: "A producer-consumer implementation using a LinkedBlockingQueue, with multiple producers and consumers running concurrently."
+  title: producer-consumer with BlockingQueue
+  brief: A producer-consumer implementation using a LinkedBlockingQueue, with multiple producers and consumers running concurrently.
 
 - id: py-drf-pagination
   status: pending
   language: python
   path: backend/python/drf_custom_pagination.py
-  title: "custom DRF cursor pagination"
-  brief: "A cursor-based pagination class for Django REST Framework that encodes the position as an opaque token."
+  title: custom DRF cursor pagination
+  brief: A cursor-based pagination class for Django REST Framework that encodes the position as an opaque token.
 
 - id: go-graceful-shutdown
   status: pending
   language: go
   path: backend/go/graceful_shutdown.go
-  title: "graceful HTTP server shutdown"
-  brief: "An HTTP server that catches OS signals and performs a graceful shutdown with a configurable drain timeout."
+  title: graceful HTTP server shutdown
+  brief: An HTTP server that catches OS signals and performs a graceful shutdown with a configurable drain timeout.
 
 - id: ts-retry-utility
   status: pending
   language: typescript
   path: algorithms/typescript/retry.ts
-  title: "async retry with exponential backoff"
-  brief: "A generic async retry utility with configurable attempts, exponential backoff, jitter, and an abort condition."
+  title: async retry with exponential backoff
+  brief: A generic async retry utility with configurable attempts, exponential backoff, jitter, and an abort condition.
 
 - id: py-topological-sort
   status: pending
   language: python
   path: algorithms/python/topological_sort.py
-  title: "topological sort with cycle detection"
-  brief: "Topological sort using Kahn's algorithm, returning a sorted order or raising an error if a cycle is detected."
+  title: topological sort with cycle detection
+  brief: Topological sort using Kahn's algorithm, returning a sorted order or raising an error if a cycle is detected.
 
 - id: cpp-string-algorithms
   status: pending
   language: cpp
   path: algorithms/cpp/string_algorithms.cpp
-  title: "KMP and Rabin-Karp string search"
-  brief: "KMP pattern matching with failure function construction, and Rabin-Karp rolling hash search."
+  title: KMP and Rabin-Karp string search
+  brief: KMP pattern matching with failure function construction, and Rabin-Karp rolling hash search.
 
 - id: py-pytest-fixtures
   status: pending
   language: python
   path: qa-automation/python/pytest_fixtures.py
-  title: "reusable pytest fixtures for API testing"
-  brief: "A conftest.py with session-scoped fixtures for a test client, auth token, and database cleanup."
+  title: reusable pytest fixtures for API testing
+  brief: A conftest.py with session-scoped fixtures for a test client, auth token, and database cleanup.
 
 - id: go-middleware-chain
   status: pending
   language: go
   path: backend/go/middleware_chain.go
-  title: "composable HTTP middleware chain"
-  brief: "A middleware chaining utility for net/http with logging, recovery, and request-ID injection middleware included."
+  title: composable HTTP middleware chain
+  brief: A middleware chaining utility for net/http with logging, recovery, and request-ID injection middleware included.
 
 - id: ts-state-machine
   status: pending
   language: typescript
   path: algorithms/typescript/state_machine.ts
-  title: "finite state machine"
-  brief: "A typed finite state machine with defined states, transitions, guard conditions, and entry/exit hooks."
+  title: finite state machine
+  brief: A typed finite state machine with defined states, transitions, guard conditions, and entry/exit hooks.
 
 - id: py-heap-algorithms
   status: pending
   language: python
   path: algorithms/python/heap_algorithms.py
-  title: "heap-based algorithms"
-  brief: "K largest elements, merge K sorted lists, and the median of a data stream — all using Python's heapq module."
+  title: heap-based algorithms
+  brief: K largest elements, merge K sorted lists, and the median of a data stream, all using Python's heapq module.
 
 - id: java-lru-cache
   status: pending
   language: java
   path: data-structures/java/LRUCache.java
-  title: "LRU cache with LinkedHashMap"
-  brief: "A generic LRU cache backed by a LinkedHashMap in access order, with O(1) get and put."
+  title: LRU cache with LinkedHashMap
+  brief: A generic LRU cache backed by a LinkedHashMap in access order, with O(1) get and put.
 
 - id: py-cli-tool
   status: pending
   language: python
   path: backend/python/cli_tool.py
-  title: "CLI tool with argparse and subcommands"
-  brief: "A multi-subcommand CLI tool using argparse, with a config file loader, coloured output, and error handling."
+  title: CLI tool with argparse and subcommands
+  brief: A multi-subcommand CLI tool using argparse, with a config file loader, coloured output, and error handling.
 
 - id: go-config-loader
   status: pending
   language: go
   path: backend/go/config_loader.go
-  title: "environment-aware config loader"
-  brief: "A config loader that merges a YAML file with environment variable overrides, with validation and typed accessors."
+  title: environment-aware config loader
+  brief: A config loader that merges a YAML file with environment variable overrides, with validation and typed accessors.
 
 - id: ts-playwright-visual-diff
   status: pending
   language: typescript
   path: qa-automation/typescript/playwright_visual_diff.ts
-  title: "Playwright visual regression test helper"
-  brief: "A helper wrapping Playwright's screenshot comparison with configurable thresholds and annotated diff output on failure."  
+  title: Playwright visual regression test helper
+  brief: A helper wrapping Playwright's screenshot comparison with configurable thresholds and annotated diff output on failure.
