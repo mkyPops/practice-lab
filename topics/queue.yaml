@@ -206,7 +206,7 @@
   brief: A semaphore primitive using a buffered channel to limit concurrent goroutine
     execution.
 - id: ts-event-emitter
-  status: pending
+  status: done
   language: typescript
   path: algorithms/typescript/event_emitter.ts
   title: typed event emitter
