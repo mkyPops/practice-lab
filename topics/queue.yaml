@@ -213,7 +213,7 @@
   brief: A generic, strongly-typed EventEmitter supporting on, off, once, and emit
     with typed payloads.
 - id: py-sliding-window
-  status: pending
+  status: done
   language: python
   path: algorithms/python/sliding_window.py
   title: sliding window maximum

@@ -52,6 +52,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [bloom filter implementation](data-structures/python/bloom_filter.py) — A space-efficient probabilistic data structure using multiple hash functions to test set membership.
 - [semaphore for goroutine concurrency control](backend/go/semaphore.go) — A semaphore primitive using a buffered channel to limit concurrent goroutine execution.
 - [typed event emitter](algorithms/typescript/event_emitter.ts) — A generic, strongly-typed EventEmitter supporting on, off, once, and emit with typed payloads.
+- [sliding window maximum](algorithms/python/sliding_window.py) — Find the maximum value in every sliding window of size k using a deque for O(n) time complexity.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
