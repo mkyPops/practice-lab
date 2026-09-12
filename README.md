@@ -53,6 +53,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [semaphore for goroutine concurrency control](backend/go/semaphore.go) — A semaphore primitive using a buffered channel to limit concurrent goroutine execution.
 - [typed event emitter](algorithms/typescript/event_emitter.ts) — A generic, strongly-typed EventEmitter supporting on, off, once, and emit with typed payloads.
 - [sliding window maximum](algorithms/python/sliding_window.py) — Find the maximum value in every sliding window of size k using a deque for O(n) time complexity.
+- [AVL self-balancing binary search tree](data-structures/cpp/avl_tree.cpp) — An AVL tree with insert and search, performing left/right rotations to maintain balance after every insert.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout

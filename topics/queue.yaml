@@ -220,7 +220,7 @@
   brief: Find the maximum value in every sliding window of size k using a deque for
     O(n) time complexity.
 - id: cpp-avl-tree
-  status: pending
+  status: done
   language: cpp
   path: data-structures/cpp/avl_tree.cpp
   title: AVL self-balancing binary search tree
