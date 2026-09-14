@@ -234,7 +234,7 @@
   brief: A thread-safe counter using AtomicLong, with increment, decrement, reset,
     and compare-and-swap operations.
 - id: py-consistent-hashing
-  status: pending
+  status: done
   language: python
   path: backend/python/consistent_hashing.py
   title: consistent hashing ring

@@ -55,6 +55,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [sliding window maximum](algorithms/python/sliding_window.py) — Find the maximum value in every sliding window of size k using a deque for O(n) time complexity.
 - [AVL self-balancing binary search tree](data-structures/cpp/avl_tree.cpp) — An AVL tree with insert and search, performing left/right rotations to maintain balance after every insert.
 - [thread-safe counter with AtomicLong](backend/java/ThreadSafeCounter.java) — A thread-safe counter using AtomicLong, with increment, decrement, reset, and compare-and-swap operations.
+- [consistent hashing ring](backend/python/consistent_hashing.py) — A consistent hashing ring for distributing keys across nodes with minimal remapping when nodes are added or removed.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
