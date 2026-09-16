@@ -57,6 +57,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [thread-safe counter with AtomicLong](backend/java/ThreadSafeCounter.java) — A thread-safe counter using AtomicLong, with increment, decrement, reset, and compare-and-swap operations.
 - [consistent hashing ring](backend/python/consistent_hashing.py) — A consistent hashing ring for distributing keys across nodes with minimal remapping when nodes are added or removed.
 - [pipeline pattern with channels](backend/go/pipeline_pattern.go) — A multi-stage data processing pipeline using Go channels, where each stage transforms data and passes it downstream.
+- [simple observable pattern](algorithms/typescript/observable.ts) — A minimal Observable implementation with subscribe, map, filter, and unsubscribe support.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
