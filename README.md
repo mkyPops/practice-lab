@@ -58,6 +58,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [consistent hashing ring](backend/python/consistent_hashing.py) — A consistent hashing ring for distributing keys across nodes with minimal remapping when nodes are added or removed.
 - [pipeline pattern with channels](backend/go/pipeline_pattern.go) — A multi-stage data processing pipeline using Go channels, where each stage transforms data and passes it downstream.
 - [simple observable pattern](algorithms/typescript/observable.ts) — A minimal Observable implementation with subscribe, map, filter, and unsubscribe support.
+- [two sum and three sum algorithms](algorithms/python/two_sum_variants.py) — Two Sum using a hash map in O(n), and Three Sum using sorting plus two pointers in O(n2).
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout

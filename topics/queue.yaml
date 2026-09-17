@@ -255,7 +255,7 @@
   brief: A minimal Observable implementation with subscribe, map, filter, and unsubscribe
     support.
 - id: py-two-sum-variants
-  status: pending
+  status: done
   language: python
   path: algorithms/python/two_sum_variants.py
   title: two sum and three sum algorithms
