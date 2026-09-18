@@ -59,6 +59,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [pipeline pattern with channels](backend/go/pipeline_pattern.go) — A multi-stage data processing pipeline using Go channels, where each stage transforms data and passes it downstream.
 - [simple observable pattern](algorithms/typescript/observable.ts) — A minimal Observable implementation with subscribe, map, filter, and unsubscribe support.
 - [two sum and three sum algorithms](algorithms/python/two_sum_variants.py) — Two Sum using a hash map in O(n), and Three Sum using sorting plus two pointers in O(n2).
+- [Dijkstra shortest path algorithm](algorithms/cpp/dijkstra.cpp) — Dijkstra's algorithm using a priority queue over an adjacency list graph representation.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout

@@ -262,7 +262,7 @@
   brief: Two Sum using a hash map in O(n), and Three Sum using sorting plus two pointers
     in O(n2).
 - id: cpp-graph-dijkstra
-  status: pending
+  status: done
   language: cpp
   path: algorithms/cpp/dijkstra.cpp
   title: Dijkstra shortest path algorithm
