@@ -61,6 +61,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [two sum and three sum algorithms](algorithms/python/two_sum_variants.py) — Two Sum using a hash map in O(n), and Three Sum using sorting plus two pointers in O(n2).
 - [Dijkstra shortest path algorithm](algorithms/cpp/dijkstra.cpp) — Dijkstra's algorithm using a priority queue over an adjacency list graph representation.
 - [practical decorator patterns](backend/python/decorator_patterns.py) — A set of reusable decorators: retry, timer, rate_limit, and singleton, each with real-world usage examples.
+- [structured JSON logger](backend/go/json_logger.go) — A lightweight structured logger that writes JSON lines with level, timestamp, message, and arbitrary fields.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
