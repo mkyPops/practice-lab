@@ -283,7 +283,7 @@
   brief: A lightweight structured logger that writes JSON lines with level, timestamp,
     message, and arbitrary fields.
 - id: ts-playwright-api-client
-  status: pending
+  status: done
   language: typescript
   path: qa-automation/typescript/playwright_api_client.ts
   title: Playwright API testing client

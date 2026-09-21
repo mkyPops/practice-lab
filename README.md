@@ -62,6 +62,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [Dijkstra shortest path algorithm](algorithms/cpp/dijkstra.cpp) — Dijkstra's algorithm using a priority queue over an adjacency list graph representation.
 - [practical decorator patterns](backend/python/decorator_patterns.py) — A set of reusable decorators: retry, timer, rate_limit, and singleton, each with real-world usage examples.
 - [structured JSON logger](backend/go/json_logger.go) — A lightweight structured logger that writes JSON lines with level, timestamp, message, and arbitrary fields.
+- [Playwright API testing client](qa-automation/typescript/playwright_api_client.ts) — A typed wrapper around Playwright's APIRequestContext for REST API testing with built-in response validation helpers.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
