@@ -290,7 +290,7 @@
   brief: A typed wrapper around Playwright's APIRequestContext for REST API testing
     with built-in response validation helpers.
 - id: js-deep-clone
-  status: pending
+  status: done
   language: javascript
   path: algorithms/javascript/deep_clone.js
   title: deep clone utility
