@@ -297,7 +297,7 @@
   brief: A deep clone function handling nested objects, arrays, dates, maps, sets,
     and circular references.
 - id: py-segment-tree
-  status: pending
+  status: done
   language: python
   path: data-structures/python/segment_tree.py
   title: segment tree for range queries

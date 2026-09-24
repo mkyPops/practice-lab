@@ -64,6 +64,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [structured JSON logger](backend/go/json_logger.go) — A lightweight structured logger that writes JSON lines with level, timestamp, message, and arbitrary fields.
 - [Playwright API testing client](qa-automation/typescript/playwright_api_client.ts) — A typed wrapper around Playwright's APIRequestContext for REST API testing with built-in response validation helpers.
 - [deep clone utility](algorithms/javascript/deep_clone.js) — A deep clone function handling nested objects, arrays, dates, maps, sets, and circular references.
+- [segment tree for range queries](data-structures/python/segment_tree.py) — A segment tree supporting range sum queries and point updates in O(log n).
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
