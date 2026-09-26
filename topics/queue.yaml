@@ -310,7 +310,7 @@
   brief: A producer-consumer implementation using a LinkedBlockingQueue, with multiple
     producers and consumers running concurrently.
 - id: py-drf-pagination
-  status: pending
+  status: done
   language: python
   path: backend/python/drf_custom_pagination.py
   title: custom DRF cursor pagination

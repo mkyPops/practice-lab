@@ -66,6 +66,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [deep clone utility](algorithms/javascript/deep_clone.js) — A deep clone function handling nested objects, arrays, dates, maps, sets, and circular references.
 - [segment tree for range queries](data-structures/python/segment_tree.py) — A segment tree supporting range sum queries and point updates in O(log n).
 - [producer-consumer with BlockingQueue](backend/java/ProducerConsumer.java) — A producer-consumer implementation using a LinkedBlockingQueue, with multiple producers and consumers running concurrently.
+- [custom DRF cursor pagination](backend/python/drf_custom_pagination.py) — A cursor-based pagination class for Django REST Framework that encodes the position as an opaque token.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
