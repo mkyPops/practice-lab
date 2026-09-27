@@ -317,7 +317,7 @@
   brief: A cursor-based pagination class for Django REST Framework that encodes the
     position as an opaque token.
 - id: go-graceful-shutdown
-  status: pending
+  status: done
   language: go
   path: backend/go/graceful_shutdown.go
   title: graceful HTTP server shutdown

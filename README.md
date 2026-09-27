@@ -67,6 +67,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [segment tree for range queries](data-structures/python/segment_tree.py) — A segment tree supporting range sum queries and point updates in O(log n).
 - [producer-consumer with BlockingQueue](backend/java/ProducerConsumer.java) — A producer-consumer implementation using a LinkedBlockingQueue, with multiple producers and consumers running concurrently.
 - [custom DRF cursor pagination](backend/python/drf_custom_pagination.py) — A cursor-based pagination class for Django REST Framework that encodes the position as an opaque token.
+- [graceful HTTP server shutdown](backend/go/graceful_shutdown.go) — An HTTP server that catches OS signals and performs a graceful shutdown with a configurable drain timeout.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
