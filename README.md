@@ -68,6 +68,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [producer-consumer with BlockingQueue](backend/java/ProducerConsumer.java) — A producer-consumer implementation using a LinkedBlockingQueue, with multiple producers and consumers running concurrently.
 - [custom DRF cursor pagination](backend/python/drf_custom_pagination.py) — A cursor-based pagination class for Django REST Framework that encodes the position as an opaque token.
 - [graceful HTTP server shutdown](backend/go/graceful_shutdown.go) — An HTTP server that catches OS signals and performs a graceful shutdown with a configurable drain timeout.
+- [async retry with exponential backoff](algorithms/typescript/retry.ts) — A generic async retry utility with configurable attempts, exponential backoff, jitter, and an abort condition.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
