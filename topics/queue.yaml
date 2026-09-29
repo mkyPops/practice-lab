@@ -331,7 +331,7 @@
   brief: A generic async retry utility with configurable attempts, exponential backoff,
     jitter, and an abort condition.
 - id: py-topological-sort
-  status: pending
+  status: done
   language: python
   path: algorithms/python/topological_sort.py
   title: topological sort with cycle detection
