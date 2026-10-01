@@ -345,7 +345,7 @@
   brief: KMP pattern matching with failure function construction, and Rabin-Karp rolling
     hash search.
 - id: py-pytest-fixtures
-  status: pending
+  status: done
   language: python
   path: qa-automation/python/pytest_fixtures.py
   title: reusable pytest fixtures for API testing
