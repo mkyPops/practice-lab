@@ -352,7 +352,7 @@
   brief: A conftest.py with session-scoped fixtures for a test client, auth token,
     and database cleanup.
 - id: go-middleware-chain
-  status: pending
+  status: done
   language: go
   path: backend/go/middleware_chain.go
   title: composable HTTP middleware chain

@@ -72,6 +72,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [topological sort with cycle detection](algorithms/python/topological_sort.py) — Topological sort using Kahn's algorithm, returning a sorted order or raising an error if a cycle is detected.
 - [KMP and Rabin-Karp string search](algorithms/cpp/string_algorithms.cpp) — KMP pattern matching with failure function construction, and Rabin-Karp rolling hash search.
 - [reusable pytest fixtures for API testing](qa-automation/python/pytest_fixtures.py) — A conftest.py with session-scoped fixtures for a test client, auth token, and database cleanup.
+- [composable HTTP middleware chain](backend/go/middleware_chain.go) — A middleware chaining utility for net/http with logging, recovery, and request-ID injection middleware included.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
