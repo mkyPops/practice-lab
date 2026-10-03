@@ -359,7 +359,7 @@
   brief: A middleware chaining utility for net/http with logging, recovery, and request-ID
     injection middleware included.
 - id: ts-state-machine
-  status: pending
+  status: done
   language: typescript
   path: algorithms/typescript/state_machine.ts
   title: finite state machine
