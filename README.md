@@ -74,6 +74,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [reusable pytest fixtures for API testing](qa-automation/python/pytest_fixtures.py) — A conftest.py with session-scoped fixtures for a test client, auth token, and database cleanup.
 - [composable HTTP middleware chain](backend/go/middleware_chain.go) — A middleware chaining utility for net/http with logging, recovery, and request-ID injection middleware included.
 - [finite state machine](algorithms/typescript/state_machine.ts) — A typed finite state machine with defined states, transitions, guard conditions, and entry/exit hooks.
+- [heap-based algorithms](algorithms/python/heap_algorithms.py) — K largest elements, merge K sorted lists, and the median of a data stream, all using Python's heapq module.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout

@@ -366,7 +366,7 @@
   brief: A typed finite state machine with defined states, transitions, guard conditions,
     and entry/exit hooks.
 - id: py-heap-algorithms
-  status: pending
+  status: done
   language: python
   path: algorithms/python/heap_algorithms.py
   title: heap-based algorithms
