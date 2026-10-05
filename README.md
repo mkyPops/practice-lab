@@ -75,6 +75,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [composable HTTP middleware chain](backend/go/middleware_chain.go) — A middleware chaining utility for net/http with logging, recovery, and request-ID injection middleware included.
 - [finite state machine](algorithms/typescript/state_machine.ts) — A typed finite state machine with defined states, transitions, guard conditions, and entry/exit hooks.
 - [heap-based algorithms](algorithms/python/heap_algorithms.py) — K largest elements, merge K sorted lists, and the median of a data stream, all using Python's heapq module.
+- [LRU cache with LinkedHashMap](data-structures/java/LRUCache.java) — A generic LRU cache backed by a LinkedHashMap in access order, with O(1) get and put.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
