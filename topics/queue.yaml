@@ -380,7 +380,7 @@
   brief: A generic LRU cache backed by a LinkedHashMap in access order, with O(1)
     get and put.
 - id: py-cli-tool
-  status: pending
+  status: done
   language: python
   path: backend/python/cli_tool.py
   title: CLI tool with argparse and subcommands

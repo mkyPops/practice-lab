@@ -76,6 +76,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [finite state machine](algorithms/typescript/state_machine.ts) — A typed finite state machine with defined states, transitions, guard conditions, and entry/exit hooks.
 - [heap-based algorithms](algorithms/python/heap_algorithms.py) — K largest elements, merge K sorted lists, and the median of a data stream, all using Python's heapq module.
 - [LRU cache with LinkedHashMap](data-structures/java/LRUCache.java) — A generic LRU cache backed by a LinkedHashMap in access order, with O(1) get and put.
+- [CLI tool with argparse and subcommands](backend/python/cli_tool.py) — A multi-subcommand CLI tool using argparse, with a config file loader, coloured output, and error handling.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
