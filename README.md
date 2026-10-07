@@ -77,6 +77,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [heap-based algorithms](algorithms/python/heap_algorithms.py) — K largest elements, merge K sorted lists, and the median of a data stream, all using Python's heapq module.
 - [LRU cache with LinkedHashMap](data-structures/java/LRUCache.java) — A generic LRU cache backed by a LinkedHashMap in access order, with O(1) get and put.
 - [CLI tool with argparse and subcommands](backend/python/cli_tool.py) — A multi-subcommand CLI tool using argparse, with a config file loader, coloured output, and error handling.
+- [environment-aware config loader](backend/go/config_loader.go) — A config loader that merges a YAML file with environment variable overrides, with validation and typed accessors.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
