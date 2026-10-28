@@ -1,69 +1,81 @@
-// Package main demonstrates a simple semaphore primitive built on top of a
-// buffered channel, used to limit the number of goroutines that may execute
-// a critical section concurrently.
+// Package main implements a simple counting semaphore built on top of a
+// buffered channel. It can be used to limit the number of goroutines that
+// may execute a given section of code concurrently.
 package main
 
 import (
+	"context"
 	"fmt"
 	"sync"
 	"time"
 )
 
-// Semaphore restricts concurrent access to a resource to a fixed number of
-// holders. It is implemented using a buffered channel as the counting
-// mechanism: acquiring blocks when the channel is full, and releasing frees
-// a slot for the next waiter.
+// Semaphore limits concurrent access to a resource to at most N holders.
 type Semaphore struct {
-	slots chan struct{}
+	tokens chan struct{}
 }
 
-// NewSemaphore creates a Semaphore that allows up to n concurrent holders.
+// NewSemaphore creates a semaphore that allows up to n concurrent acquisitions.
 func NewSemaphore(n int) *Semaphore {
 	if n <= 0 {
-		panic("semaphore: n must be positive")
+		panic("semaphore: n must be greater than zero")
 	}
-	return &Semaphore{slots: make(chan struct{}, n)}
+	return &Semaphore{tokens: make(chan struct{}, n)}
 }
 
-// Acquire blocks until a slot is available, then claims it.
-func (s *Semaphore) Acquire() {
-	s.slots <- struct{}{} // blocks if channel buffer is full
+// Acquire blocks until a slot is available or ctx is canceled.
+func (s *Semaphore) Acquire(ctx context.Context) error {
+	select {
+	case s.tokens <- struct{}{}:
+		return nil
+	case <-ctx.Done():
+		return ctx.Err()
+	}
 }
 
-// Release frees a previously acquired slot.
-func (s *Semaphore) Release() {
-	<-s.slots
-}
-
-// TryAcquire attempts to claim a slot without blocking, reporting success.
+// TryAcquire attempts to acquire a slot without blocking.
+// It returns true if the slot was acquired.
 func (s *Semaphore) TryAcquire() bool {
 	select {
-	case s.slots <- struct{}{}:
+	case s.tokens <- struct{}{}:
 		return true
 	default:
 		return false
 	}
 }
 
-func main() {
-	const maxConcurrent = 3
-	sem := NewSemaphore(maxConcurrent)
+// Release frees up a previously acquired slot.
+func (s *Semaphore) Release() {
+	select {
+	case <-s.tokens:
+	default:
+		// Release called without a matching Acquire; ignore to avoid panic.
+	}
+}
 
+func main() {
+	sem := NewSemaphore(3) // allow at most 3 concurrent workers
 	var wg sync.WaitGroup
+
 	for i := 1; i <= 10; i++ {
 		wg.Add(1)
 		go func(id int) {
 			defer wg.Done()
 
-			sem.Acquire()
+			ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+			defer cancel()
+
+			if err := sem.Acquire(ctx); err != nil {
+				fmt.Printf("worker %d: failed to acquire: %v\n", id, err)
+				return
+			}
 			defer sem.Release()
 
-			fmt.Printf("worker %d: started\n", id)
-			time.Sleep(200 * time.Millisecond) // simulate work
-			fmt.Printf("worker %d: finished\n", id)
+			fmt.Printf("worker %d: running\n", id)
+			time.Sleep(300 * time.Millisecond)
+			fmt.Printf("worker %d: done\n", id)
 		}(i)
 	}
 
 	wg.Wait()
-	fmt.Println("all workers completed")
 }

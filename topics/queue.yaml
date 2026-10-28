@@ -199,7 +199,7 @@
   brief: A space-efficient probabilistic data structure using multiple hash functions
     to test set membership.
 - id: go-semaphore
-  status: pending
+  status: done
   language: go
   path: backend/go/semaphore.go
   title: semaphore for goroutine concurrency control

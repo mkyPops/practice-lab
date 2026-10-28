@@ -80,6 +80,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [environment-aware config loader](backend/go/config_loader.go) — A config loader that merges a YAML file with environment variable overrides, with validation and typed accessors.
 - [Playwright visual regression test helper](qa-automation/typescript/playwright_visual_diff.ts) — A helper wrapping Playwright's screenshot comparison with configurable thresholds and annotated diff output on failure.
 - [bloom filter implementation](data-structures/python/bloom_filter.py) — A space-efficient probabilistic data structure using multiple hash functions to test set membership.
+- [semaphore for goroutine concurrency control](backend/go/semaphore.go) — A semaphore primitive using a buffered channel to limit concurrent goroutine execution.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
