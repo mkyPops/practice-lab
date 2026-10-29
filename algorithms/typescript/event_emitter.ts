@@ -1,14 +1,15 @@
 /**
- * A generic, strongly-typed event emitter.
+ * A generic, strongly-typed EventEmitter.
  *
  * Consumers define an event map interface where each key is an event name
- * and each value is the tuple of argument types for that event's payload.
- * All `on`/`off`/`once`/`emit` calls are then checked against that map.
+ * and each value is the tuple of argument types emitted for that event.
+ * This gives full type-safety and autocompletion for `on`, `off`, `once`,
+ * and `emit` calls.
  *
  * Example:
  *   interface Events {
  *     greet: [name: string];
- *     tick: [count: number];
+ *     error: [err: Error];
  *   }
  *   const emitter = new TypedEventEmitter<Events>();
  *   emitter.on('greet', (name) => console.log(`Hello, ${name}`));
@@ -19,28 +20,28 @@ type EventMap = Record<string, unknown[]>;
 
 type Listener<Args extends unknown[]> = (...args: Args) => void;
 
-export class TypedEventEmitter<Events extends EventMap> {
+export class TypedEventEmitter<TEvents extends EventMap> {
   private listeners: {
-    [K in keyof Events]?: Set<Listener<Events[K]>>;
+    [K in keyof TEvents]?: Set<Listener<TEvents[K]>>;
   } = {};
 
   /** Register a listener for an event. */
-  on<K extends keyof Events>(event: K, listener: Listener<Events[K]>): this {
+  on<K extends keyof TEvents>(event: K, listener: Listener<TEvents[K]>): this {
     const set = this.listeners[event] ?? new Set();
     set.add(listener);
     this.listeners[event] = set;
     return this;
   }
 
-  /** Remove a previously registered listener. */
-  off<K extends keyof Events>(event: K, listener: Listener<Events[K]>): this {
+  /** Remove a previously registered listener for an event. */
+  off<K extends keyof TEvents>(event: K, listener: Listener<TEvents[K]>): this {
     this.listeners[event]?.delete(listener);
     return this;
   }
 
-  /** Register a listener that fires only once, then auto-removes itself. */
-  once<K extends keyof Events>(event: K, listener: Listener<Events[K]>): this {
-    const wrapper: Listener<Events[K]> = (...args) => {
+  /** Register a listener that is invoked at most once, then auto-removed. */
+  once<K extends keyof TEvents>(event: K, listener: Listener<TEvents[K]>): this {
+    const wrapper: Listener<TEvents[K]> = (...args) => {
       this.off(event, wrapper);
       listener(...args);
     };
@@ -48,7 +49,7 @@ export class TypedEventEmitter<Events extends EventMap> {
   }
 
   /** Synchronously invoke all listeners registered for an event. */
-  emit<K extends keyof Events>(event: K, ...args: Events[K]): boolean {
+  emit<K extends keyof TEvents>(event: K, ...args: TEvents[K]): boolean {
     const set = this.listeners[event];
     if (!set || set.size === 0) return false;
     // Copy to array so listeners added/removed during emit don't affect this pass.
@@ -59,7 +60,7 @@ export class TypedEventEmitter<Events extends EventMap> {
   }
 
   /** Remove all listeners for a specific event, or all events if omitted. */
-  removeAllListeners<K extends keyof Events>(event?: K): this {
+  removeAllListeners<K extends keyof TEvents>(event?: K): this {
     if (event === undefined) {
       this.listeners = {};
     } else {
