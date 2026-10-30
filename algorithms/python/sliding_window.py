@@ -1,10 +1,9 @@
 """
 Sliding Window Maximum
 
-Given an array of integers and a window size k, this module computes the
-maximum value within each contiguous sliding window of size k as it moves
-from left to right across the array. Uses a monotonic deque of indices to
-achieve O(n) time complexity overall.
+Computes the maximum value in every contiguous sliding window of size k
+across a list of numbers, using a monotonic deque to achieve O(n) time
+complexity (each element is pushed and popped from the deque at most once).
 """
 
 from collections import deque
@@ -12,30 +11,39 @@ from typing import List
 
 
 def sliding_window_maximum(nums: List[int], k: int) -> List[int]:
-    """Return a list of maximums for each sliding window of size k."""
+    """Return a list of maximums for each sliding window of size k.
+
+    Args:
+        nums: List of numbers to scan.
+        k: Size of the sliding window (must be a positive integer <= len(nums)).
+
+    Returns:
+        A list containing the maximum of each window, in order.
+    """
     if not nums or k <= 0:
         return []
     if k > len(nums):
         raise ValueError("Window size k cannot exceed the length of nums")
 
     result = []
-    dq = deque()  # will store indices of nums, values in decreasing order
+    # Deque stores indices into nums; values are kept in decreasing order.
+    window: deque = deque()
 
     for i, num in enumerate(nums):
-        # Remove indices that are out of the current window's bounds
-        if dq and dq[0] <= i - k:
-            dq.popleft()
+        # Remove indices that have slid out of the current window.
+        if window and window[0] <= i - k:
+            window.popleft()
 
-        # Remove indices whose values are smaller than the current number,
-        # since they can never be the maximum while num is in the window
-        while dq and nums[dq[-1]] < num:
-            dq.pop()
+        # Maintain decreasing order: drop smaller values from the back,
+        # since they can never be the max while num is still in range.
+        while window and nums[window[-1]] <= num:
+            window.pop()
 
-        dq.append(i)
+        window.append(i)
 
-        # The front of the deque is the index of the current window's max
+        # Once we've processed at least k elements, record the max.
         if i >= k - 1:
-            result.append(nums[dq[0]])
+            result.append(nums[window[0]])
 
     return result
 
@@ -43,6 +51,5 @@ def sliding_window_maximum(nums: List[int], k: int) -> List[int]:
 if __name__ == "__main__":
     sample = [1, 3, -1, -3, 5, 3, 6, 7]
     window_size = 3
-    print(f"Array: {sample}")
-    print(f"Window size: {window_size}")
+    print(f"Input: {sample}, k={window_size}")
     print(f"Sliding window maximums: {sliding_window_maximum(sample, window_size)}")
