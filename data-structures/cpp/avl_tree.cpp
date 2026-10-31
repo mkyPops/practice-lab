@@ -1,6 +1,5 @@
-// AVL self-balancing binary search tree.
-// Supports insertion (with automatic rotations to maintain balance) and search.
-
+// AVL self-balancing binary search tree supporting insert and search,
+// with automatic left/right/left-right/right-left rotations after insertion.
 #include <iostream>
 #include <algorithm>
 #include <memory>
@@ -8,7 +7,8 @@
 struct Node {
     int key;
     int height;
-    std::unique_ptr<Node> left, right;
+    std::unique_ptr<Node> left;
+    std::unique_ptr<Node> right;
     explicit Node(int k) : key(k), height(1) {}
 };
 
@@ -17,7 +17,7 @@ public:
     void insert(int key) { root_ = insert(std::move(root_), key); }
 
     bool search(int key) const {
-        Node* cur = root_.get();
+        const Node* cur = root_.get();
         while (cur) {
             if (key == cur->key) return true;
             cur = key < cur->key ? cur->left.get() : cur->right.get();
@@ -38,24 +38,24 @@ private:
         n->height = 1 + std::max(height(n->left.get()), height(n->right.get()));
     }
 
-    // Right rotation: pivot's left child becomes new root of subtree.
-    static std::unique_ptr<Node> rotateRight(std::unique_ptr<Node> pivot) {
-        std::unique_ptr<Node> newRoot = std::move(pivot->left);
-        pivot->left = std::move(newRoot->right);
-        updateHeight(pivot.get());
-        newRoot->right = std::move(pivot);
-        updateHeight(newRoot.get());
-        return newRoot;
+    // Standard right rotation: pulls left child up to become new subtree root.
+    static std::unique_ptr<Node> rotateRight(std::unique_ptr<Node> y) {
+        std::unique_ptr<Node> x = std::move(y->left);
+        y->left = std::move(x->right);
+        updateHeight(y.get());
+        x->right = std::move(y);
+        updateHeight(x.get());
+        return x;
     }
 
-    // Left rotation: pivot's right child becomes new root of subtree.
-    static std::unique_ptr<Node> rotateLeft(std::unique_ptr<Node> pivot) {
-        std::unique_ptr<Node> newRoot = std::move(pivot->right);
-        pivot->right = std::move(newRoot->left);
-        updateHeight(pivot.get());
-        newRoot->left = std::move(pivot);
-        updateHeight(newRoot.get());
-        return newRoot;
+    // Standard left rotation: pulls right child up to become new subtree root.
+    static std::unique_ptr<Node> rotateLeft(std::unique_ptr<Node> x) {
+        std::unique_ptr<Node> y = std::move(x->right);
+        x->right = std::move(y->left);
+        updateHeight(x.get());
+        y->left = std::move(x);
+        updateHeight(y.get());
+        return y;
     }
 
     static std::unique_ptr<Node> insert(std::unique_ptr<Node> node, int key) {
@@ -66,22 +66,25 @@ private:
         } else if (key > node->key) {
             node->right = insert(std::move(node->right), key);
         } else {
-            return node; // duplicate keys not inserted
+            return node; // duplicate keys are ignored
         }
 
         updateHeight(node.get());
         int balance = balanceFactor(node.get());
 
         // Left-heavy cases
-        if (balance > 1) {
-            if (balanceFactor(node->left.get()) < 0)
-                node->left = rotateLeft(std::move(node->left)); // Left-Right case
+        if (balance > 1 && key < node->left->key)
+            return rotateRight(std::move(node));
+        if (balance > 1 && key > node->left->key) {
+            node->left = rotateLeft(std::move(node->left));
             return rotateRight(std::move(node));
         }
+
         // Right-heavy cases
-        if (balance < -1) {
-            if (balanceFactor(node->right.get()) > 0)
-                node->right = rotateRight(std::move(node->right)); // Right-Left case
+        if (balance < -1 && key > node->right->key)
+            return rotateLeft(std::move(node));
+        if (balance < -1 && key < node->right->key) {
+            node->right = rotateRight(std::move(node->right));
             return rotateLeft(std::move(node));
         }
 
@@ -94,9 +97,9 @@ int main() {
     int values[] = {10, 20, 30, 40, 50, 25};
     for (int v : values) tree.insert(v);
 
-    for (int v : {25, 5, 40}) {
-        std::cout << "Search " << v << ": "
-                  << (tree.search(v) ? "found" : "not found") << "\n";
+    for (int v : {25, 100, 10, 999}) {
+        std::cout << "search(" << v << ") = "
+                  << (tree.search(v) ? "found" : "not found") << '\n';
     }
     return 0;
 }
