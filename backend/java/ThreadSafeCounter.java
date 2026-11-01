@@ -1,31 +1,28 @@
 /*
  * ThreadSafeCounter.java
  *
- * A thread-safe counter implementation backed by AtomicLong.
- * Supports increment, decrement, reset, and compare-and-swap (CAS)
- * operations without explicit locking, relying on atomic hardware
- * instructions for consistency under concurrent access.
+ * A simple thread-safe counter backed by AtomicLong.
+ * Supports increment, decrement, reset, and a compare-and-swap (CAS) operation.
+ * Demonstrates usage with multiple concurrent threads in main().
  */
 
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public final class ThreadSafeCounter {
 
     private final AtomicLong value = new AtomicLong(0L);
 
-    /** Increments the counter by 1 and returns the updated value. */
+    /** Atomically increments the counter by one and returns the new value. */
     public long increment() {
         return value.incrementAndGet();
     }
 
-    /** Decrements the counter by 1 and returns the updated value. */
+    /** Atomically decrements the counter by one and returns the new value. */
     public long decrement() {
         return value.decrementAndGet();
-    }
-
-    /** Adds the given delta (may be negative) and returns the updated value. */
-    public long add(long delta) {
-        return value.addAndGet(delta);
     }
 
     /** Resets the counter to zero and returns the previous value. */
@@ -33,44 +30,41 @@ public final class ThreadSafeCounter {
         return value.getAndSet(0L);
     }
 
-    /** Returns the current value of the counter. */
+    /** Returns the current value. */
     public long get() {
         return value.get();
     }
 
     /**
-     * Atomically sets the value to {@code newValue} if the current value
-     * equals {@code expectedValue}.
-     *
-     * @return true if the update was successful, false otherwise
+     * Atomically sets the value to {@code update} if the current value equals
+     * {@code expected}. Returns true on success, false otherwise.
      */
-    public boolean compareAndSwap(long expectedValue, long newValue) {
-        return value.compareAndSet(expectedValue, newValue);
+    public boolean compareAndSwap(long expected, long update) {
+        return value.compareAndSet(expected, update);
     }
 
-    /** Simple demonstration of concurrent usage. */
     public static void main(String[] args) throws InterruptedException {
         ThreadSafeCounter counter = new ThreadSafeCounter();
-        int threadCount = 10;
-        int incrementsPerThread = 1000;
+        ExecutorService pool = Executors.newFixedThreadPool(4);
 
-        Runnable task = () -> {
-            for (int i = 0; i < incrementsPerThread; i++) {
-                counter.increment();
-            }
-        };
-
-        Thread[] threads = new Thread[threadCount];
-        for (int i = 0; i < threadCount; i++) {
-            threads[i] = new Thread(task);
-            threads[i].start();
+        // Launch 1000 increments and 500 decrements concurrently.
+        for (int i = 0; i < 1000; i++) {
+            pool.submit(counter::increment);
         }
-        for (Thread t : threads) {
-            t.join();
+        for (int i = 0; i < 500; i++) {
+            pool.submit(counter::decrement);
         }
 
-        System.out.println("Final counter value: " + counter.get());
-        System.out.println("CAS 10000 -> 0: " + counter.compareAndSwap(10000, 0));
-        System.out.println("Value after CAS: " + counter.get());
+        pool.shutdown();
+        pool.awaitTermination(5, TimeUnit.SECONDS);
+
+        System.out.println("Final value (expected 500): " + counter.get());
+
+        // Demonstrate CAS: only succeeds if current value matches expected.
+        boolean success = counter.compareAndSwap(500L, 42L);
+        System.out.println("CAS success: " + success + ", value now: " + counter.get());
+
+        counter.reset();
+        System.out.println("After reset: " + counter.get());
     }
 }

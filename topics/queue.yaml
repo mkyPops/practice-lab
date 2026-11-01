@@ -227,7 +227,7 @@
   brief: An AVL tree with insert and search, performing left/right rotations to maintain
     balance after every insert.
 - id: java-thread-safe-counter
-  status: pending
+  status: done
   language: java
   path: backend/java/ThreadSafeCounter.java
   title: thread-safe counter with AtomicLong
