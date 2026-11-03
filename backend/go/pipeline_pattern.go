@@ -1,11 +1,13 @@
-// Package main demonstrates a multi-stage data processing pipeline built
-// with Go channels. Numbers flow through generator -> square -> filter
-// stages, and the final results are collected and printed by the consumer.
+// Package main demonstrates a multi-stage data processing pipeline using
+// Go channels. Each stage runs in its own goroutine, transforming data and
+// passing it downstream until a final stage aggregates the results.
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
-// generate emits integers 1..n on the returned channel.
+// generate emits integers 1..n onto a channel, then closes it.
 func generate(n int) <-chan int {
 	out := make(chan int)
 	go func() {
@@ -17,7 +19,7 @@ func generate(n int) <-chan int {
 	return out
 }
 
-// square reads integers from in, squares them, and sends results downstream.
+// square reads integers from in, squares them, and sends the results on.
 func square(in <-chan int) <-chan int {
 	out := make(chan int)
 	go func() {
@@ -29,7 +31,7 @@ func square(in <-chan int) <-chan int {
 	return out
 }
 
-// filterEven passes through only even values from in.
+// filterEven passes through only even values.
 func filterEven(in <-chan int) <-chan int {
 	out := make(chan int)
 	go func() {
@@ -43,17 +45,21 @@ func filterEven(in <-chan int) <-chan int {
 	return out
 }
 
+// sum consumes all values from in and returns their total.
+func sum(in <-chan int) int {
+	total := 0
+	for v := range in {
+		total += v
+	}
+	return total
+}
+
 func main() {
-	// Wire the pipeline stages together.
+	// Wire up the pipeline: generate -> square -> filterEven -> sum.
 	numbers := generate(10)
 	squared := square(numbers)
 	evens := filterEven(squared)
+	result := sum(evens)
 
-	// Consume the final stage and accumulate the sum.
-	sum := 0
-	for v := range evens {
-		fmt.Println("received:", v)
-		sum += v
-	}
-	fmt.Println("sum of even squares:", sum)
+	fmt.Printf("Sum of even squares from 1..10: %d\n", result)
 }

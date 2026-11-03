@@ -241,7 +241,7 @@
   brief: A consistent hashing ring for distributing keys across nodes with minimal
     remapping when nodes are added or removed.
 - id: go-pipeline-pattern
-  status: pending
+  status: done
   language: go
   path: backend/go/pipeline_pattern.go
   title: pipeline pattern with channels
