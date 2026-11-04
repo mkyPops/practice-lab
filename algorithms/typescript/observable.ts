@@ -1,66 +1,66 @@
 /**
  * A minimal Observable implementation supporting subscribe, map, filter,
- * and unsubscribe. Not spec-compliant with TC39 Observable, just a small
- * educational/utility version for synchronous or async push-based streams.
+ * and unsubscribe. Values are pushed synchronously to subscribers.
  */
 
 type Observer<T> = (value: T) => void;
-type Subscription = { unsubscribe: () => void };
-type Producer<T> = (observer: Observer<T>) => (() => void) | void;
+type Unsubscribe = () => void;
+type Producer<T> = (observer: Observer<T>) => Unsubscribe | void;
 
 class Observable<T> {
-  constructor(private readonly producer: Producer<T>) {}
+  private readonly producer: Producer<T>;
 
-  subscribe(observer: Observer<T>): Subscription {
-    let unsubscribed = false;
+  constructor(producer: Producer<T>) {
+    this.producer = producer;
+  }
 
-    // Wrap the observer so we stop delivering values after unsubscribe.
-    const guardedObserver: Observer<T> = (value) => {
-      if (!unsubscribed) observer(value);
-    };
-
-    const cleanup = this.producer(guardedObserver);
-
-    return {
-      unsubscribe: () => {
-        if (unsubscribed) return;
-        unsubscribed = true;
-        if (typeof cleanup === "function") cleanup();
-      },
+  // Registers an observer and returns an unsubscribe function.
+  subscribe(observer: Observer<T>): Unsubscribe {
+    const cleanup = this.producer(observer);
+    return () => {
+      if (typeof cleanup === 'function') {
+        cleanup();
+      }
     };
   }
 
+  // Creates a new Observable that transforms emitted values.
   map<U>(fn: (value: T) => U): Observable<U> {
     return new Observable<U>((observer) => {
-      const sub = this.subscribe((value) => observer(fn(value)));
-      return () => sub.unsubscribe();
+      return this.subscribe((value) => observer(fn(value)));
     });
   }
 
+  // Creates a new Observable that only emits values passing the predicate.
   filter(predicate: (value: T) => boolean): Observable<T> {
     return new Observable<T>((observer) => {
-      const sub = this.subscribe((value) => {
-        if (predicate(value)) observer(value);
+      return this.subscribe((value) => {
+        if (predicate(value)) {
+          observer(value);
+        }
       });
-      return () => sub.unsubscribe();
     });
   }
 
+  // Convenience factory for emitting a fixed set of values synchronously.
   static of<T>(...values: T[]): Observable<T> {
     return new Observable<T>((observer) => {
-      for (const value of values) observer(value);
+      for (const value of values) {
+        observer(value);
+      }
     });
   }
 }
 
 // --- Example usage ---
-const numbers = Observable.of(1, 2, 3, 4, 5, 6);
 
-const subscription = numbers
+const numbers$ = Observable.of(1, 2, 3, 4, 5, 6);
+
+const unsubscribe = numbers$
   .filter((n) => n % 2 === 0)
   .map((n) => n * 10)
-  .subscribe((value) => console.log("Received:", value));
+  .subscribe((value) => console.log('Received:', value));
 
-subscription.unsubscribe();
+unsubscribe();
 
-export { Observable, Observer, Subscription };
+export { Observable };
