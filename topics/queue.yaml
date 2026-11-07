@@ -269,7 +269,7 @@
   brief: Dijkstra's algorithm using a priority queue over an adjacency list graph
     representation.
 - id: py-decorator-patterns
-  status: pending
+  status: done
   language: python
   path: backend/python/decorator_patterns.py
   title: practical decorator patterns

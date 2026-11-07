@@ -1,34 +1,36 @@
 """
 Practical decorator patterns: retry, timer, rate_limit, and singleton.
-Each decorator is generic (works with any callable) and includes a
-small real-world usage example demonstrating typical application.
+Each decorator is reusable and generic; usage examples are at the bottom.
 """
 
 import time
+import random
 import functools
 import threading
 
 
-def retry(times=3, delay=1.0, exceptions=(Exception,)):
-    """Retry a function call on failure, with fixed delay between attempts."""
+def retry(times=3, delay=1.0, backoff=2.0, exceptions=(Exception,)):
+    """Retry a function call on failure, with exponential backoff."""
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            last_exc = None
+            current_delay = delay
             for attempt in range(1, times + 1):
                 try:
                     return func(*args, **kwargs)
                 except exceptions as exc:
-                    last_exc = exc
-                    if attempt < times:
-                        time.sleep(delay)
-            raise last_exc
+                    if attempt == times:
+                        raise
+                    print(f"[retry] {func.__name__} failed ({exc}); "
+                          f"attempt {attempt}/{times}, retrying in {current_delay:.1f}s")
+                    time.sleep(current_delay)
+                    current_delay *= backoff
         return wrapper
     return decorator
 
 
 def timer(func):
-    """Log the execution time of a function call."""
+    """Measure and print the execution time of a function."""
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         start = time.perf_counter()
@@ -39,7 +41,7 @@ def timer(func):
     return wrapper
 
 
-def rate_limit(calls, period=1.0):
+def rate_limit(calls=5, period=1.0):
     """Limit a function to `calls` invocations per `period` seconds (thread-safe)."""
     def decorator(func):
         lock = threading.Lock()
@@ -49,12 +51,12 @@ def rate_limit(calls, period=1.0):
         def wrapper(*args, **kwargs):
             with lock:
                 now = time.monotonic()
-                # drop timestamps outside the sliding window
+                # drop timestamps older than the window
                 while timestamps and now - timestamps[0] > period:
                     timestamps.pop(0)
                 if len(timestamps) >= calls:
-                    wait_time = period - (now - timestamps[0])
-                    time.sleep(max(wait_time, 0))
+                    wait = period - (now - timestamps[0])
+                    time.sleep(max(wait, 0))
                 timestamps.append(time.monotonic())
             return func(*args, **kwargs)
         return wrapper
@@ -62,7 +64,7 @@ def rate_limit(calls, period=1.0):
 
 
 def singleton(cls):
-    """Ensure a class has only one instance (thread-safe)."""
+    """Ensure only one instance of a class is ever created (thread-safe)."""
     instances = {}
     lock = threading.Lock()
 
@@ -78,40 +80,36 @@ def singleton(cls):
 
 # --- Usage examples ---
 
-@retry(times=3, delay=0.5, exceptions=(ConnectionError,))
-def fetch_from_flaky_service(url):
-    """Simulates an unreliable network call."""
-    print(f"Fetching {url}...")
-    raise ConnectionError("service unavailable")
+@retry(times=4, delay=0.3, exceptions=(ConnectionError,))
+def flaky_network_call():
+    if random.random() < 0.7:
+        raise ConnectionError("simulated network failure")
+    return "network response OK"
 
 
 @timer
-def compute_heavy_task(n):
-    return sum(i * i for i in range(n))
+def compute_sum(n):
+    return sum(range(n))
 
 
-@rate_limit(calls=2, period=1.0)
-def call_external_api(payload):
-    print(f"Calling API with {payload}")
+@rate_limit(calls=3, period=1.0)
+def call_external_api(i):
+    print(f"[api] request #{i} sent at {time.strftime('%X')}")
 
 
 @singleton
-class DatabaseConnection:
+class ConfigManager:
     def __init__(self):
-        print("Establishing new database connection...")
+        self.settings = {"env": "production"}
 
 
 if __name__ == "__main__":
-    compute_heavy_task(1_000_000)
+    print(flaky_network_call())
+    print(compute_sum(1_000_000))
 
-    for i in range(4):
-        call_external_api(f"request-{i}")
+    for i in range(6):
+        call_external_api(i)
 
-    db1 = DatabaseConnection()
-    db2 = DatabaseConnection()
-    print("Same instance:", db1 is db2)
-
-    try:
-        fetch_from_flaky_service("http://example.com")
-    except ConnectionError as e:
-        print(f"Final failure after retries: {e}")
+    cfg1 = ConfigManager()
+    cfg2 = ConfigManager()
+    print("Same instance:", cfg1 is cfg2)
