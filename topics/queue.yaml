@@ -276,7 +276,7 @@
   brief: 'A set of reusable decorators: retry, timer, rate_limit, and singleton, each
     with real-world usage examples.'
 - id: go-json-logger
-  status: pending
+  status: done
   language: go
   path: backend/go/json_logger.go
   title: structured JSON logger

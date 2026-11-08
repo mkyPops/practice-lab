@@ -1,6 +1,7 @@
-// Package main implements a lightweight structured logger that emits
-// newline-delimited JSON records containing a level, timestamp, message,
-// and any number of arbitrary key/value fields. It is safe for concurrent use.
+// Package main implements a lightweight structured JSON logger.
+// Each log entry is emitted as a single JSON line containing a level,
+// an RFC3339Nano timestamp, a message, and any arbitrary caller-supplied
+// fields. The logger is safe for concurrent use.
 package main
 
 import (
@@ -22,7 +23,6 @@ const (
 	Error
 )
 
-// String returns the lowercase name of the level, used in JSON output.
 func (l Level) String() string {
 	switch l {
 	case Debug:
@@ -38,46 +38,44 @@ func (l Level) String() string {
 	}
 }
 
-// Field is a single key/value pair attached to a log entry.
-type Field struct {
-	Key   string
-	Value interface{}
-}
-
-// F is a convenience constructor for a Field.
-func F(key string, value interface{}) Field {
-	return Field{Key: key, Value: value}
-}
-
-// Logger writes structured JSON log lines to an underlying writer.
+// Logger writes structured JSON log lines to an output writer.
 type Logger struct {
-	out      io.Writer
-	mu       sync.Mutex
-	minLevel Level
+	mu     sync.Mutex
+	out    io.Writer
+	level  Level
+	fields map[string]interface{}
 }
 
-// New creates a Logger that writes to out, filtering out entries below minLevel.
-func New(out io.Writer, minLevel Level) *Logger {
-	return &Logger{out: out, minLevel: minLevel}
+// NewLogger creates a Logger writing to out, filtering entries below minLevel.
+func NewLogger(out io.Writer, minLevel Level) *Logger {
+	return &Logger{out: out, level: minLevel, fields: map[string]interface{}{}}
 }
 
-// log builds the JSON record and writes it atomically.
-func (l *Logger) log(level Level, msg string, fields ...Field) {
-	if level < l.minLevel {
-		return
+// With returns a new Logger that includes the given fields on every entry,
+// in addition to any fields already attached to the parent logger.
+func (l *Logger) With(fields map[string]interface{}) *Logger {
+	merged := make(map[string]interface{}, len(l.fields)+len(fields))
+	for k, v := range l.fields {
+		merged[k] = v
 	}
-	// Pre-size the map for the standard fields plus any extras.
-	entry := make(map[string]interface{}, len(fields)+3)
+	for k, v := range fields {
+		merged[k] = v
+	}
+	return &Logger{out: l.out, level: l.level, fields: merged}
+}
+
+// log builds and writes a single JSON line for the given entry.
+func (l *Logger) log(level Level, msg string, fields map[string]interface{}) {
+	if level < l.level {
+		return // below configured threshold, skip
+	}
+	entry := make(map[string]interface{}, len(l.fields)+len(fields)+3)
+	for k, v := range l.fields {
+		entry[k] = v
+	}
+	for k, v := range fields {
+		entry[k] = v
+	}
 	entry["level"] = level.String()
 	entry["time"] = time.Now().UTC().Format(time.RFC3339Nano)
 	entry["msg"] = msg
-	for _, f := range fields {
-		entry[f.Key] = f.Value
-	}
-
-	data, err := json.Marshal(entry)
-	if err != nil {
-		// Fall back to a minimal error record rather than dropping the log silently.
-		data, _ = json.Marshal(map[string]string{
-			"level": Error.String(),
-			"msg
