@@ -1,96 +1,85 @@
-/**
- * A typed wrapper around Playwright's APIRequestContext for REST API testing.
- * Provides generic request helpers that return parsed JSON bodies and a set
- * of assertion helpers for validating HTTP responses concisely in tests.
- */
+// A typed wrapper around Playwright's APIRequestContext that provides
+// convenient REST helpers (get/post/put/patch/delete) with generic JSON
+// typing and built-in response validation utilities for API testing.
 
 import { APIRequestContext, APIResponse, expect } from '@playwright/test';
 
-export interface ApiResult<T> {
-  status: number;
-  headers: Record<string, string>;
-  body: T;
-  raw: APIResponse;
-}
-
-export interface RequestOptions {
+export interface ApiOptions {
   headers?: Record<string, string>;
   params?: Record<string, string | number | boolean>;
   data?: unknown;
 }
 
+export interface ApiResult<T> {
+  response: APIResponse;
+  status: number;
+  body: T;
+}
+
 export class ApiClient {
   constructor(
     private readonly request: APIRequestContext,
-    private readonly baseUrl: string = '',
+    private readonly baseHeaders: Record<string, string> = { 'Content-Type': 'application/json' },
   ) {}
 
-  async get<T = unknown>(path: string, options: RequestOptions = {}): Promise<ApiResult<T>> {
-    return this.send<T>('GET', path, options);
+  async get<T = unknown>(url: string, options: ApiOptions = {}): Promise<ApiResult<T>> {
+    return this.send<T>('GET', url, options);
   }
 
-  async post<T = unknown>(path: string, options: RequestOptions = {}): Promise<ApiResult<T>> {
-    return this.send<T>('POST', path, options);
+  async post<T = unknown>(url: string, options: ApiOptions = {}): Promise<ApiResult<T>> {
+    return this.send<T>('POST', url, options);
   }
 
-  async put<T = unknown>(path: string, options: RequestOptions = {}): Promise<ApiResult<T>> {
-    return this.send<T>('PUT', path, options);
+  async put<T = unknown>(url: string, options: ApiOptions = {}): Promise<ApiResult<T>> {
+    return this.send<T>('PUT', url, options);
   }
 
-  async patch<T = unknown>(path: string, options: RequestOptions = {}): Promise<ApiResult<T>> {
-    return this.send<T>('PATCH', path, options);
+  async patch<T = unknown>(url: string, options: ApiOptions = {}): Promise<ApiResult<T>> {
+    return this.send<T>('PATCH', url, options);
   }
 
-  async delete<T = unknown>(path: string, options: RequestOptions = {}): Promise<ApiResult<T>> {
-    return this.send<T>('DELETE', path, options);
+  async delete<T = unknown>(url: string, options: ApiOptions = {}): Promise<ApiResult<T>> {
+    return this.send<T>('DELETE', url, options);
   }
 
   private async send<T>(
     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
-    path: string,
-    options: RequestOptions,
+    url: string,
+    options: ApiOptions,
   ): Promise<ApiResult<T>> {
-    const url = `${this.baseUrl}${path}`;
-    const raw = await this.request.fetch(url, {
+    const response = await this.request.fetch(url, {
       method,
-      headers: options.headers,
+      headers: { ...this.baseHeaders, ...options.headers },
       params: options.params,
       data: options.data,
     });
 
-    // Attempt JSON parsing but fall back to text for non-JSON payloads.
+    // Gracefully fall back to raw text if the body isn't valid JSON.
     let body: T;
     try {
-      body = (await raw.json()) as T;
+      body = (await response.json()) as T;
     } catch {
-      body = (await raw.text()) as unknown as T;
+      body = (await response.text()) as unknown as T;
     }
 
-    return { status: raw.status(), headers: raw.headers(), body, raw };
+    return { response, status: response.status(), body };
   }
 
-  // --- Validation helpers -------------------------------------------------
-
-  expectStatus<T>(result: ApiResult<T>, expected: number): ApiResult<T> {
+  /** Asserts the response status equals the expected code. */
+  expectStatus<T>(result: ApiResult<T>, expected: number): void {
     expect(result.status, `Expected status ${expected} but got ${result.status}`).toBe(expected);
-    return result;
   }
 
-  expectOk<T>(result: ApiResult<T>): ApiResult<T> {
-    expect(result.raw.ok(), `Expected OK response but got ${result.status}`).toBeTruthy();
-    return result;
+  /** Asserts that every provided key exists on the response body (shallow shape check). */
+  expectBodyToContainKeys<T extends object>(result: ApiResult<T>, keys: Array<keyof T>): void {
+    for (const key of keys) {
+      expect(result.body, `Missing key "${String(key)}" in response body`).toHaveProperty(String(key));
+    }
   }
 
-  expectHeader<T>(result: ApiResult<T>, name: string, value: string): ApiResult<T> {
-    expect(result.headers[name.toLowerCase()]).toBe(value);
-    return result;
-  }
-
-  expectBodyContains<T extends Record<string, unknown>>(
-    result: ApiResult<T>,
-    subset: Partial<T>,
-  ): ApiResult<T> {
-    expect(result.body).toMatchObject(subset);
-    return result;
+  /** Asserts a response header matches the expected value. */
+  expectHeader<T>(result: ApiResult<T>, name: string, value: string): void {
+    const actual = result.response.headers()[name.toLowerCase()];
+    expect(actual, `Expected header "${name}" to be "${value}" but got "${actual}"`).toBe(value);
   }
 }
