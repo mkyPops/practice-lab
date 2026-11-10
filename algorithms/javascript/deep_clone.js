@@ -1,86 +1,73 @@
 /**
  * deepClone.js
  *
- * Deep clone utility that recursively copies plain objects, arrays,
- * Dates, Maps, Sets, and other common structures while correctly
- * handling circular references via a WeakMap cache.
+ * A generic deep cloning utility.
+ * Supports plain objects, arrays, Dates, Maps, Sets, RegExps,
+ * and preserves circular references via a WeakMap seen-cache.
  */
 
-'use strict';
-
 function deepClone(value, seen = new WeakMap()) {
-  // Primitives (including null, undefined, functions, symbols) are returned as-is.
+  // Primitives (including null, undefined, functions) are returned as-is.
   if (value === null || typeof value !== 'object') {
     return value;
   }
 
-  // If we've already cloned this object, return the existing clone
-  // to preserve circular references and shared references.
+  // Handle circular references: if we've already cloned this object, reuse it.
   if (seen.has(value)) {
     return seen.get(value);
   }
 
-  // Handle Date
+  // Dates: clone by copying the timestamp.
   if (value instanceof Date) {
     return new Date(value.getTime());
   }
 
-  // Handle RegExp
+  // RegExps: clone source, flags, and lastIndex.
   if (value instanceof RegExp) {
-    return new RegExp(value.source, value.flags);
+    const clonedRegExp = new RegExp(value.source, value.flags);
+    clonedRegExp.lastIndex = value.lastIndex;
+    return clonedRegExp;
   }
 
-  // Handle Map
+  // Arrays: create an empty array first so it can be registered
+  // in `seen` before recursing (handles circular refs inside arrays).
+  if (Array.isArray(value)) {
+    const clonedArray = [];
+    seen.set(value, clonedArray);
+    value.forEach((item, index) => {
+      clonedArray[index] = deepClone(item, seen);
+    });
+    return clonedArray;
+  }
+
+  // Maps: clone keys and values recursively.
   if (value instanceof Map) {
     const clonedMap = new Map();
     seen.set(value, clonedMap);
-    for (const [key, val] of value) {
+    for (const [key, val] of value.entries()) {
       clonedMap.set(deepClone(key, seen), deepClone(val, seen));
     }
     return clonedMap;
   }
 
-  // Handle Set
+  // Sets: clone each entry recursively.
   if (value instanceof Set) {
     const clonedSet = new Set();
     seen.set(value, clonedSet);
-    for (const item of value) {
+    for (const item of value.values()) {
       clonedSet.add(deepClone(item, seen));
     }
     return clonedSet;
   }
 
-  // Handle Array
-  if (Array.isArray(value)) {
-    const clonedArr = [];
-    seen.set(value, clonedArr);
-    for (let i = 0; i < value.length; i++) {
-      clonedArr[i] = deepClone(value[i], seen);
-    }
-    return clonedArr;
+  // Plain objects (and objects with custom prototypes): preserve prototype chain.
+  const clonedObject = Object.create(Object.getPrototypeOf(value));
+  seen.set(value, clonedObject);
+  for (const key of Object.keys(value)) {
+    clonedObject[key] = deepClone(value[key], seen);
   }
 
-  // Handle typed arrays and ArrayBuffer-backed objects.
-  if (ArrayBuffer.isView(value)) {
-    return value.constructor.from(value);
-  }
-
-  // Handle plain objects (and objects with custom prototypes).
-  const proto = Object.getPrototypeOf(value);
-  const clonedObj = Object.create(proto);
-  seen.set(value, clonedObj);
-
-  for (const key of Reflect.ownKeys(value)) {
-    const descriptor = Object.getOwnPropertyDescriptor(value, key);
-    if (descriptor && 'value' in descriptor) {
-      clonedObj[key] = deepClone(value[key], seen);
-    } else if (descriptor) {
-      // Preserve getters/setters as-is rather than invoking them.
-      Object.defineProperty(clonedObj, key, descriptor);
-    }
-  }
-
-  return clonedObj;
+  return clonedObject;
 }
 
 module.exports = deepClone;
