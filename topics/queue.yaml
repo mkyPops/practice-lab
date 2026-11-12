@@ -303,7 +303,7 @@
   title: segment tree for range queries
   brief: A segment tree supporting range sum queries and point updates in O(log n).
 - id: java-producer-consumer
-  status: pending
+  status: done
   language: java
   path: backend/java/ProducerConsumer.java
   title: producer-consumer with BlockingQueue

@@ -1,75 +1,73 @@
 /*
- * Producer-Consumer demo using a LinkedBlockingQueue as the shared buffer.
- * Multiple producer threads generate integer items and place them on the
- * queue; multiple consumer threads take and process them concurrently.
- * A sentinel "poison pill" value is used to signal consumers to stop once
- * all producers have finished.
+ * Producer-Consumer demo using a LinkedBlockingQueue.
+ * Multiple producer threads generate integer items and place them on a
+ * shared bounded queue; multiple consumer threads take items and process
+ * them. Shutdown is coordinated with "poison pill" sentinel values: once
+ * all producers finish, one poison pill per consumer is enqueued so each
+ * consumer can exit cleanly after draining remaining work.
  */
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ProducerConsumerDemo {
 
+    private static final int QUEUE_CAPACITY = 20;
     private static final int NUM_PRODUCERS = 3;
-    private static final int NUM_CONSUMERS = 2;
-    private static final int ITEMS_PER_PRODUCER = 5;
+    private static final int NUM_CONSUMERS = 4;
+    private static final int ITEMS_PER_PRODUCER = 10;
+
+    // Sentinel value signaling a consumer should stop.
     private static final Integer POISON_PILL = Integer.MIN_VALUE;
 
     public static void main(String[] args) throws InterruptedException {
-        BlockingQueue<Integer> queue = new LinkedBlockingQueue<>(10);
-        AtomicInteger producedCounter = new AtomicInteger(0);
+        BlockingQueue<Integer> queue = new LinkedBlockingQueue<>(QUEUE_CAPACITY);
+        ExecutorService producerPool = Executors.newFixedThreadPool(NUM_PRODUCERS);
+        ExecutorService consumerPool = Executors.newFixedThreadPool(NUM_CONSUMERS);
+        AtomicInteger itemSequence = new AtomicInteger(0);
 
-        Thread[] producers = new Thread[NUM_PRODUCERS];
+        // Launch producers.
         for (int p = 0; p < NUM_PRODUCERS; p++) {
-            int producerId = p;
-            producers[p] = new Thread(() -> {
-                for (int i = 0; i < ITEMS_PER_PRODUCER; i++) {
-                    int value = producerId * 1000 + i;
-                    try {
-                        queue.put(value); // blocks if queue is full
-                        System.out.println("Producer " + producerId + " produced " + value);
-                        producedCounter.incrementAndGet();
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        return;
-                    }
-                }
-            }, "producer-" + p);
-            producers[p].start();
-        }
-
-        Thread[] consumers = new Thread[NUM_CONSUMERS];
-        for (int c = 0; c < NUM_CONSUMERS; c++) {
-            int consumerId = c;
-            consumers[c] = new Thread(() -> {
+            producerPool.submit(() -> {
                 try {
-                    while (true) {
-                        Integer item = queue.take(); // blocks if queue is empty
-                        if (item.equals(POISON_PILL)) {
-                            queue.put(POISON_PILL); // pass the pill along for other consumers
-                            break;
-                        }
-                        System.out.println("Consumer " + consumerId + " consumed " + item);
+                    for (int i = 0; i < ITEMS_PER_PRODUCER; i++) {
+                        int item = itemSequence.incrementAndGet();
+                        queue.put(item);
+                        System.out.println(Thread.currentThread().getName() + " produced " + item);
                     }
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
-            }, "consumer-" + c);
-            consumers[c].start();
+            });
         }
 
-        // Wait for all producers to finish before signaling consumers to stop.
-        for (Thread producer : producers) {
-            producer.join();
+        // Launch consumers.
+        for (int c = 0; c < NUM_CONSUMERS; c++) {
+            consumerPool.submit(() -> {
+                try {
+                    while (true) {
+                        Integer item = queue.take();
+                        if (item.equals(POISON_PILL)) {
+                            break; // stop signal received
+                        }
+                        System.out.println(Thread.currentThread().getName() + " consumed " + item);
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            });
         }
-        queue.put(POISON_PILL); // triggers the relay chain among consumers
 
-        for (Thread consumer : consumers) {
-            consumer.join();
+        producerPool.shutdown();
+        producerPool.awaitTermination(1, TimeUnit.MINUTES);
+
+        // All production done; enqueue one poison pill per consumer.
+        for (int c = 0; c < NUM_CONSUMERS; c++) {
+            queue.put(POISON_PILL);
         }
 
-        System.out.println("Total items produced: " + producedCounter.get());
+        consumerPool.shutdown();
+        consumerPool.awaitTermination(1, TimeUnit.MINUTES);
+
         System.out.println("All producers and consumers have finished.");
     }
 }
