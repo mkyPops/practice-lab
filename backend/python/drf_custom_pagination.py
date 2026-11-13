@@ -1,66 +1,61 @@
 """
 Custom cursor-based pagination for Django REST Framework.
 
-Encodes the pagination cursor (ordering field value + row offset for ties)
-as an opaque, URL-safe base64 token instead of exposing raw field values.
-Clients receive `next`/`previous` links containing the encoded token and
-never need to know the internal ordering field or its representation.
+Encodes the pagination position (an ordering field value + direction) as an
+opaque, base64-encoded JSON token instead of exposing raw field values in
+the query string. This avoids leaking internal data (e.g. timestamps, IDs)
+directly in URLs while still providing stable, efficient cursor pagination
+on top of DRF's CursorPagination machinery.
 """
+
 import base64
 import json
 
 from rest_framework.pagination import CursorPagination
+from rest_framework.exceptions import NotFound
 
 
-class OpaqueCursorPagination(CursorPagination):
-    """Cursor pagination whose `cursor` query param is an opaque token."""
+class ObfuscatedCursorPagination(CursorPagination):
+    """CursorPagination variant that opaquely encodes the cursor token."""
 
     page_size = 25
-    max_page_size = 200
-    page_size_query_param = "page_size"
-    ordering = "-created_at"  # default ordering field, override per-view
+    max_page_size = 100
+    ordering = "-created_at"  # must correspond to an indexed, unique-ish field
     cursor_query_param = "cursor"
 
     def encode_cursor(self, cursor):
-        """Serialize the internal Cursor namedtuple into an opaque token."""
-        tokens = {
+        """Serialize the Cursor namedtuple into an opaque base64 token."""
+        token = {
             "offset": cursor.offset,
             "reverse": cursor.reverse,
             "position": cursor.position,
         }
-        encoded = base64.urlsafe_b64encode(
-            json.dumps(tokens).encode("ascii")
-        ).decode("ascii")
+        raw = json.dumps(token, separators=(",", ":")).encode("utf-8")
+        encoded = base64.urlsafe_b64encode(raw).decode("ascii").rstrip("=")
 
-        # Build the URL exactly like the base class, but with our token.
-        querystring = self._replace_query_param_or_remove(
-            self.cursor_query_param, encoded
-        )
-        return querystring
-
-    def _replace_query_param_or_remove(self, key, value):
-        # Delegate to base helpers to keep other query params/ordering intact.
-        request = self.request
-        url = request.build_absolute_uri()
-        from rest_framework.utils.urls import replace_query_param
-
-        return replace_query_param(url, key, value)
+        # Build the URL with our opaque token instead of DRF's default encoding.
+        url = self.base_url
+        return replace_query_param(url, self.cursor_query_param, encoded)
 
     def decode_cursor(self, request):
-        """Reverse of encode_cursor: turn the opaque token back into a Cursor."""
+        """Decode the opaque token back into a Cursor namedtuple."""
         encoded = request.query_params.get(self.cursor_query_param)
         if encoded is None:
             return None
 
         try:
-            raw = base64.urlsafe_b64decode(encoded.encode("ascii"))
-            tokens = json.loads(raw.decode("ascii"))
-            offset = int(tokens["offset"])
-            reverse = bool(tokens["reverse"])
-            position = tokens["position"]
-        except (TypeError, ValueError, KeyError):
-            return None
+            padding = "=" * (-len(encoded) % 4)
+            raw = base64.urlsafe_b64decode(encoded + padding)
+            token = json.loads(raw.decode("utf-8"))
+            return Cursor(
+                offset=int(token["offset"]),
+                reverse=bool(token["reverse"]),
+                position=token["position"],
+            )
+        except (TypeError, ValueError, KeyError, UnicodeDecodeError):
+            raise NotFound("Invalid cursor")
 
-        from rest_framework.pagination import Cursor
 
-        return Cursor(offset=offset, reverse=reverse, position=position)
+# Imports placed here to keep the top of the file focused on the public class.
+from rest_framework.pagination import Cursor  # noqa: E402
+from rest_framework.utils.urls import replace_query_param  # noqa: E402
