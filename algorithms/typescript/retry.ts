@@ -1,22 +1,22 @@
 /**
- * Generic async retry utility with exponential backoff, optional jitter,
- * and a configurable abort condition. Useful for retrying flaky I/O
- * operations (network calls, DB queries, etc.) without hammering the
- * downstream service.
+ * Generic async retry utility with configurable attempts, exponential backoff,
+ * jitter, and an abort condition to stop retrying early on certain errors.
  */
 
 export interface RetryOptions {
-  /** Maximum number of attempts (including the first one). */
-  attempts: number;
-  /** Base delay in milliseconds for the first retry. */
-  baseDelayMs: number;
-  /** Upper bound on the computed delay, regardless of attempt count. */
-  maxDelayMs: number;
-  /** Apply "full jitter" to the computed delay (default: true). */
-  jitter?: boolean;
-  /** If this returns true for a given error, retrying stops immediately. */
+  /** Maximum number of attempts (including the first), default 3. */
+  attempts?: number;
+  /** Base delay in milliseconds before the first retry, default 100. */
+  baseDelayMs?: number;
+  /** Maximum delay cap in milliseconds, default 10000. */
+  maxDelayMs?: number;
+  /** Multiplier applied to the delay after each attempt, default 2. */
+  factor?: number;
+  /** Jitter ratio (0-1) applied randomly to the computed delay, default 0.5. */
+  jitter?: number;
+  /** Return true to abort retrying immediately (e.g. non-retryable errors). */
   shouldAbort?: (error: unknown) => boolean;
-  /** Optional hook invoked before each retry, useful for logging/metrics. */
+  /** Called after each failed attempt, useful for logging/metrics. */
   onRetry?: (error: unknown, attempt: number, delayMs: number) => void;
 }
 
@@ -24,43 +24,50 @@ const sleep = (ms: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
- * Runs `fn`, retrying on failure according to `options`. `fn` receives the
- * current attempt number (1-based) in case it wants to adjust behavior.
- * Rethrows the last error once attempts are exhausted or abort is triggered.
+ * Executes `fn` and retries on failure using exponential backoff with jitter.
+ * Rejects with the last error if all attempts are exhausted or `shouldAbort`
+ * signals that retrying should stop.
  */
 export async function retry<T>(
-  fn: (attempt: number) => Promise<T>,
-  options: RetryOptions,
+  fn: () => Promise<T>,
+  options: RetryOptions = {},
 ): Promise<T> {
-  const { attempts, baseDelayMs, maxDelayMs, jitter = true, shouldAbort, onRetry } = options;
-
-  if (attempts < 1) {
-    throw new RangeError("attempts must be at least 1");
-  }
+  const {
+    attempts = 3,
+    baseDelayMs = 100,
+    maxDelayMs = 10_000,
+    factor = 2,
+    jitter = 0.5,
+    shouldAbort,
+    onRetry,
+  } = options;
 
   let lastError: unknown;
 
   for (let attempt = 1; attempt <= attempts; attempt++) {
     try {
-      return await fn(attempt);
-    } catch (error) {
-      lastError = error;
+      return await fn();
+    } catch (err) {
+      lastError = err;
 
       const isLastAttempt = attempt === attempts;
-      if (isLastAttempt || shouldAbort?.(error)) {
-        throw error;
+      if (isLastAttempt || shouldAbort?.(err)) {
+        throw err;
       }
 
-      // Exponential backoff, capped at maxDelayMs.
-      const exponentialDelay = Math.min(maxDelayMs, baseDelayMs * 2 ** (attempt - 1));
-      // Full jitter: uniformly random delay between 0 and exponentialDelay.
-      const delayMs = jitter ? Math.random() * exponentialDelay : exponentialDelay;
+      // Exponential backoff: baseDelay * factor^(attempt-1), capped at maxDelayMs.
+      const exponential = baseDelayMs * factor ** (attempt - 1);
+      const capped = Math.min(exponential, maxDelayMs);
 
-      onRetry?.(error, attempt, delayMs);
+      // Full jitter: randomize within [capped * (1 - jitter), capped].
+      const jitterFloor = capped * (1 - jitter);
+      const delayMs = jitterFloor + Math.random() * (capped - jitterFloor);
+
+      onRetry?.(err, attempt, delayMs);
       await sleep(delayMs);
     }
   }
 
-  // Unreachable, but keeps TypeScript happy about the return type.
+  // Unreachable, but keeps TypeScript's control-flow analysis satisfied.
   throw lastError;
 }
