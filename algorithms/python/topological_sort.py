@@ -1,72 +1,74 @@
 """
-Topological sort implementation using Kahn's algorithm.
+Topological sort using Kahn's algorithm.
 
-Given a directed acyclic graph (DAG) represented as an adjacency list,
-this module computes a valid topological ordering of its nodes. If the
-graph contains a cycle, a ValueError is raised since no valid ordering
-exists.
+Given a directed graph represented as an adjacency list (dict mapping each
+node to an iterable of nodes it points to), compute a topological ordering
+of the nodes. If the graph contains a cycle, no valid ordering exists and a
+ValueError is raised instead.
 """
 
 from collections import deque
-from typing import Dict, Iterable, List, TypeVar
-
-T = TypeVar("T")
+from typing import Dict, Hashable, Iterable, List
 
 
-def topological_sort(graph: Dict[T, Iterable[T]]) -> List[T]:
-    """
-    Return a topological ordering of the nodes in `graph`.
-
-    `graph` maps each node to an iterable of nodes it points to
-    (i.e., edges go from key -> value). Nodes referenced only as
-    dependencies (values) but not present as keys are treated as
-    having no outgoing edges.
+def topological_sort(graph: Dict[Hashable, Iterable[Hashable]]) -> List[Hashable]:
+    """Return a topologically sorted list of nodes from `graph`.
 
     Raises:
         ValueError: if the graph contains a cycle.
     """
-    # Ensure every node (source or target) appears in the graph and in-degree map.
-    in_degree: Dict[T, int] = {}
-    for node, deps in graph.items():
-        in_degree.setdefault(node, 0)
-        for dep in deps:
-            in_degree[dep] = in_degree.get(dep, 0) + 1
-
-    # Normalize adjacency so lookups never fail for leaf nodes.
-    adjacency: Dict[T, Iterable[T]] = {node: graph.get(node, []) for node in in_degree}
+    # Ensure every referenced node has an entry, and compute in-degrees.
+    in_degree = {node: 0 for node in graph}
+    for node, neighbors in graph.items():
+        for neighbor in neighbors:
+            in_degree.setdefault(neighbor, 0)
+            in_degree[neighbor] += 1
+            graph.setdefault(neighbor, [])
 
     # Start with all nodes that have no incoming edges.
-    queue = deque(node for node, degree in in_degree.items() if degree == 0)
-    order: List[T] = []
+    queue = deque(node for node, deg in in_degree.items() if deg == 0)
+    order: List[Hashable] = []
 
     while queue:
         node = queue.popleft()
         order.append(node)
-        for neighbor in adjacency[node]:
+        for neighbor in graph.get(node, []):
             in_degree[neighbor] -= 1
             if in_degree[neighbor] == 0:
                 queue.append(neighbor)
 
     if len(order) != len(in_degree):
-        raise ValueError("Graph contains a cycle; topological sort not possible")
+        raise ValueError("Graph contains at least one cycle; "
+                          "topological sort is not possible.")
 
     return order
 
 
-if __name__ == "__main__":
-    # Simple demonstration.
-    sample_graph = {
+def main() -> None:
+    # Example graph: classic "getting dressed" dependency chain.
+    graph = {
         "shirt": ["jacket"],
         "tie": ["jacket"],
         "jacket": [],
-        "pants": ["shoes", "shirt"],
-        "shoes": [],
+        "pants": ["shoes", "jacket"],
+        "underwear": ["pants"],
         "socks": ["shoes"],
+        "shoes": [],
     }
-    print(topological_sort(sample_graph))
 
+    try:
+        order = topological_sort(graph)
+        print("Topological order:", order)
+    except ValueError as exc:
+        print("Error:", exc)
+
+    # Example graph with a cycle to demonstrate error handling.
     cyclic_graph = {"a": ["b"], "b": ["c"], "c": ["a"]}
     try:
         topological_sort(cyclic_graph)
     except ValueError as exc:
-        print(f"Error: {exc}")
+        print("Error:", exc)
+
+
+if __name__ == "__main__":
+    main()
