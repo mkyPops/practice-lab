@@ -338,7 +338,7 @@
   brief: Topological sort using Kahn's algorithm, returning a sorted order or raising
     an error if a cycle is detected.
 - id: cpp-string-algorithms
-  status: pending
+  status: done
   language: cpp
   path: algorithms/cpp/string_algorithms.cpp
   title: KMP and Rabin-Karp string search
