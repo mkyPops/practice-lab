@@ -1,59 +1,63 @@
-"""conftest.py
-
-Reusable, session-scoped pytest fixtures for API integration testing.
-Includes a minimal in-process FastAPI app (acting as the system under test)
-so this file is fully self-contained and runnable with `pytest`.
-"""
+# conftest.py
+# Reusable pytest fixtures for API testing: a Flask app factory, a test
+# client, an authenticated token, and automatic database cleanup between
+# tests. The "database" here is an in-memory dict to keep the example
+# self-contained and runnable without external services.
 
 import pytest
-from fastapi import FastAPI, Depends, HTTPException, Header
-from fastapi.testclient import TestClient
+from flask import Flask, jsonify, request
 
-# --- In-memory "database" and app under test -------------------------------
-
-db: dict[int, dict] = {}
-VALID_TOKEN = "test-token-123"  # noqa: S105 - test-only credential
-
-app = FastAPI()
+# --- In-memory "database" shared across the app ---------------------------
+_DB = {"users": {}, "tokens": {}}
 
 
-def _verify_token(authorization: str = Header(...)) -> None:
-    if authorization != f"Bearer {VALID_TOKEN}":
-        raise HTTPException(status_code=401, detail="Invalid token")
+def create_app():
+    app = Flask(__name__)
 
+    @app.post("/login")
+    def login():
+        username = request.json.get("username", "tester")
+        token = f"token-{username}"
+        _DB["tokens"][token] = username
+        return jsonify(token=token)
 
-@app.post("/login")
-def login():
-    return {"access_token": VALID_TOKEN}
+    @app.post("/users")
+    def create_user():
+        data = request.json
+        _DB["users"][data["id"]] = data
+        return jsonify(data), 201
 
+    @app.get("/users/<user_id>")
+    def get_user(user_id):
+        user = _DB["users"].get(user_id)
+        return (jsonify(user), 200) if user else (jsonify(error="not found"), 404)
 
-@app.post("/items")
-def create_item(item: dict, _: None = Depends(_verify_token)):
-    item_id = len(db) + 1
-    db[item_id] = item
-    return {"id": item_id, **item}
-
-
-# --- Fixtures ----------------------------------------------------------------
-
-@pytest.fixture(scope="session")
-def client() -> TestClient:
-    """A single TestClient instance shared across the whole test session."""
-    with TestClient(app) as c:
-        yield c
+    return app
 
 
 @pytest.fixture(scope="session")
-def auth_token(client: TestClient) -> str:
+def app():
+    """Create the Flask application once per test session."""
+    return create_app()
+
+
+@pytest.fixture(scope="session")
+def client(app):
+    """Session-scoped test client for issuing HTTP requests."""
+    return app.test_client()
+
+
+@pytest.fixture(scope="session")
+def auth_token(client):
     """Authenticate once per session and reuse the resulting token."""
-    response = client.post("/login")
-    response.raise_for_status()
-    return response.json()["access_token"]
+    response = client.post("/login", json={"username": "tester"})
+    assert response.status_code == 200
+    return response.get_json()["token"]
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(autouse=True)
 def database_cleanup():
-    """Ensure the test database starts empty and is wiped after the session."""
-    db.clear()
-    yield db
-    db.clear()
+    """Ensure each test starts with a clean database and cleans up after."""
+    yield
+    _DB["users"].clear()
+    _DB["tokens"].clear()
