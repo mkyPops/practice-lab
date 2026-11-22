@@ -373,7 +373,7 @@
   brief: K largest elements, merge K sorted lists, and the median of a data stream,
     all using Python's heapq module.
 - id: java-lru-cache
-  status: pending
+  status: done
   language: java
   path: data-structures/java/LRUCache.java
   title: LRU cache with LinkedHashMap
