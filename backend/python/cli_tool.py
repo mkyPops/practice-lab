@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-A small CLI tool demonstrating argparse subcommands, JSON config loading,
-coloured terminal output, and centralized error handling.
+A small CLI tool ("confman") for managing a JSON config file.
 
-Usage:
-    cli.py init --config config.json
-    cli.py show --config config.json
-    cli.py set --config config.json key value
+Subcommands:
+    init          create a new config file
+    get <key>     print the value of a key
+    set <key> <value>  set a key to a value
+    list          list all key/value pairs
+
+Config is stored as JSON at ~/.confman.json unless --config is given.
 """
 
 import argparse
@@ -15,81 +17,95 @@ import sys
 from pathlib import Path
 
 
-class Color:
-    RED = "\033[31m"
-    GREEN = "\033[32m"
-    YELLOW = "\033[33m"
+class Colors:
+    RED = "\033[91m"
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
     RESET = "\033[0m"
 
 
-def cprint(msg, color=Color.RESET):
-    print(f"{color}{msg}{Color.RESET}")
-
-
-def load_config(path):
-    config_path = Path(path)
-    if not config_path.exists():
+def load_config(path: Path) -> dict:
+    if not path.exists():
         return {}
     try:
-        return json.loads(config_path.read_text())
+        return json.loads(path.read_text())
     except json.JSONDecodeError as exc:
-        raise ValueError(f"Invalid JSON in config '{path}': {exc}") from exc
+        raise RuntimeError(f"invalid JSON in {path}: {exc}") from exc
 
 
-def save_config(path, data):
-    Path(path).write_text(json.dumps(data, indent=2))
+def save_config(path: Path, data: dict) -> None:
+    path.write_text(json.dumps(data, indent=2, sort_keys=True))
 
 
 def cmd_init(args):
+    if args.config.exists() and not args.force:
+        raise RuntimeError(f"{args.config} already exists (use --force to overwrite)")
     save_config(args.config, {})
-    cprint(f"Initialized empty config at '{args.config}'", Color.GREEN)
+    print(f"{Colors.GREEN}Initialized config at {args.config}{Colors.RESET}")
 
 
-def cmd_show(args):
+def cmd_get(args):
     data = load_config(args.config)
-    if not data:
-        cprint("Config is empty.", Color.YELLOW)
-        return
-    for key, value in data.items():
-        print(f"{Color.GREEN}{key}{Color.RESET} = {value}")
+    if args.key not in data:
+        raise RuntimeError(f"key '{args.key}' not found")
+    print(data[args.key])
 
 
 def cmd_set(args):
     data = load_config(args.config)
     data[args.key] = args.value
     save_config(args.config, data)
-    cprint(f"Set '{args.key}' = '{args.value}'", Color.GREEN)
+    print(f"{Colors.GREEN}Set {args.key} = {args.value}{Colors.RESET}")
 
 
-def build_parser():
-    parser = argparse.ArgumentParser(prog="cli", description="Simple config-managing CLI tool.")
-    parser.add_argument("--config", default="config.json", help="Path to config file")
+def cmd_list(args):
+    data = load_config(args.config)
+    if not data:
+        print(f"{Colors.YELLOW}(empty config){Colors.RESET}")
+        return
+    for key, value in sorted(data.items()):
+        print(f"{Colors.GREEN}{key}{Colors.RESET} = {value}")
 
-    subparsers = parser.add_subparsers(dest="command", required=True)
 
-    p_init = subparsers.add_parser("init", help="Create a new empty config file")
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="confman", description="Manage a JSON config file.")
+    parser.add_argument(
+        "--config", type=Path, default=Path.home() / ".confman.json", help="path to config file"
+    )
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    p_init = sub.add_parser("init", help="create a new config file")
+    p_init.add_argument("--force", action="store_true", help="overwrite existing config")
     p_init.set_defaults(func=cmd_init)
 
-    p_show = subparsers.add_parser("show", help="Display current config contents")
-    p_show.set_defaults(func=cmd_show)
+    p_get = sub.add_parser("get", help="get a value")
+    p_get.add_argument("key")
+    p_get.set_defaults(func=cmd_get)
 
-    p_set = subparsers.add_parser("set", help="Set a key/value pair in the config")
+    p_set = sub.add_parser("set", help="set a value")
     p_set.add_argument("key")
     p_set.add_argument("value")
     p_set.set_defaults(func=cmd_set)
 
+    p_list = sub.add_parser("list", help="list all values")
+    p_list.set_defaults(func=cmd_list)
+
     return parser
 
 
-def main():
+def main(argv=None) -> int:
     parser = build_parser()
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     try:
         args.func(args)
-    except (ValueError, OSError) as exc:
-        cprint(f"Error: {exc}", Color.RED)
-        sys.exit(1)
+    except RuntimeError as exc:
+        print(f"{Colors.RED}Error: {exc}{Colors.RESET}", file=sys.stderr)
+        return 1
+    except OSError as exc:
+        print(f"{Colors.RED}I/O error: {exc}{Colors.RESET}", file=sys.stderr)
+        return 1
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
