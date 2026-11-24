@@ -387,7 +387,7 @@
   brief: A multi-subcommand CLI tool using argparse, with a config file loader, coloured
     output, and error handling.
 - id: go-config-loader
-  status: pending
+  status: done
   language: go
   path: backend/go/config_loader.go
   title: environment-aware config loader
