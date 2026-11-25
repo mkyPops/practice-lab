@@ -394,7 +394,7 @@
   brief: A config loader that merges a YAML file with environment variable overrides,
     with validation and typed accessors.
 - id: ts-playwright-visual-diff
-  status: pending
+  status: done
   language: typescript
   path: qa-automation/typescript/playwright_visual_diff.ts
   title: Playwright visual regression test helper
