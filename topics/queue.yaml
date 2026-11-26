@@ -401,7 +401,7 @@
   brief: A helper wrapping Playwright's screenshot comparison with configurable thresholds
     and annotated diff output on failure.
 - id: py-redis-pub-sub
-  status: pending
+  status: done
   language: python
   path: backend/python/redis_pub_sub.py
   title: Redis pub/sub message broker
