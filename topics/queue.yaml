@@ -408,7 +408,7 @@
   brief: A publisher and subscriber using Redis channels with connection pooling and
     error recovery on disconnect.
 - id: go-grpc-server
-  status: pending
+  status: done
   language: go
   path: backend/go/grpc_server.go
   title: minimal gRPC server

@@ -110,6 +110,7 @@ I review new entries as they land and expand the ones worth building on further.
 - [environment-aware config loader](backend/go/config_loader.go) — A config loader that merges a YAML file with environment variable overrides, with validation and typed accessors.
 - [Playwright visual regression test helper](qa-automation/typescript/playwright_visual_diff.ts) — A helper wrapping Playwright's screenshot comparison with configurable thresholds and annotated diff output on failure.
 - [Redis pub/sub message broker](backend/python/redis_pub_sub.py) — A publisher and subscriber using Redis channels with connection pooling and error recovery on disconnect.
+- [minimal gRPC server](backend/go/grpc_server.go) — A gRPC server with a simple service definition, unary RPC handler, and graceful shutdown.
 <!-- AUTO-GENERATED-INDEX-END -->
 
 ## Layout
