@@ -415,7 +415,7 @@
   brief: A gRPC server with a simple service definition, unary RPC handler, and graceful
     shutdown.
 - id: ts-zod-validation
-  status: pending
+  status: done
   language: typescript
   path: backend/typescript/zod_validation.ts
   title: request validation with Zod
